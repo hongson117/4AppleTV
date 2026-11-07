@@ -1,0 +1,10 @@
+{
+  "version": "1.0.0",
+  "build": 38,
+  "releaseDate": "2026-11-07T10:40:00Z",
+  "downloadURL": "https://github.com/hongson117/4AppleTV/releases/latest/download/4AppleTV.ipa",
+  "releasePageURL": "https://github.com/hongson117/4AppleTV/releases/tag/v1.0.0",
+  "changelog": "• Tích hợp chế độ Tự động cập nhật ứng dụng (In-App Auto-Update) ngay trong 4AppleTV.\n• Nâng cấp hệ thống bản quyền thương mại Sideload Pass v2.0 (1 thiết bị Active, hỗ trợ tự động đổi máy tối đa 2 lần).\n• Bộ biểu tượng 3D 4AppleTV mới & Giao diện 100% Tiếng Việt.\n• Điều khiển Apple TV toàn diện (Touchpad + D-Pad + Bàn phím Tiếng Việt) & Mở nhanh ứng dụng TV.\n• Cài đặt file .IPA tvOS không dây qua Wi-Fi bằng Apple ID miễn phí hoặc Chứng chỉ .p12/.mobileprovision.",
+  "mandatory": false,
+  "sha256": "858c335db52cec1859baf610e6be072a005f0d8b2dacced73f3193af033dacad"
+}
