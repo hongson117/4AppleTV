@@ -17,12 +17,14 @@
 
 ---
 
-## 🌟 1. Giới Thiệu & Miêu Tả Chi Tiết Sản Phẩm
+## 🌟 1. Giới Thiệu & Miêu Tả Chi Tiết Sản Phẩm (Overview)
 
-**4AppleTV** là ứng dụng chuyên dụng thế hệ mới dành cho người dùng **Apple TV HD / Apple TV 4K** trên nền tảng **iPhone và iPad (iOS/iPadOS 17.0+)**. Được thiết kế với kiến trúc lõi **Rust (`libtvs_core`)** kết hợp giao diện **SwiftUI Native 100% Tiếng Việt**, **4AppleTV** hợp nhất hoàn hảo hai nhu cầu quan trọng nhất của người dùng Apple TV vào một ứng dụng duy nhất:
+**4AppleTV** là ứng dụng chuyên dụng thế hệ mới dành cho người dùng **Apple TV HD / Apple TV 4K** trên nền tảng **iPhone và iPad (iOS/iPadOS 17.0+)**. Được thiết kế với kiến trúc lõi **Rust (`libtvs_core`)** kết hợp giao diện **SwiftUI Native Đa ngôn ngữ (`Theo hệ thống / Tiếng Việt / English`)**, **4AppleTV** hợp nhất hoàn hảo hai nhu cầu quan trọng nhất của người dùng Apple TV vào một ứng dụng duy nhất:
 
 1. **Điều khiển từ xa (Smart Remote) & Mở nhanh ứng dụng trên Apple TV** với độ trễ cực thấp qua giao thức Apple Companion Link chính gốc.
 2. **Cài đặt ứng dụng bên thứ ba (`.ipa` Sideloading) không dây qua mạng Wi-Fi** trực tiếp từ iPhone lên Apple TV **mà không cần máy tính Mac, không cần Xcode và không cần dây cáp USB-C**.
+
+> 🇬🇧 **English Summary**: **4AppleTV** (v1.1.0+) natively supports **English**, **Vietnamese**, and **System Default** languages (switchable live in-app via the 🌐 globe button or **Settings ▸ Language**). It combines an ultra-low-latency Apple TV Remote + 1-tap TV App Launcher with a PC-free wireless tvOS `.ipa` sideloader (supporting both free Apple IDs and `.p12` + `.mobileprovision` certificates). For Sideload Pass licenses or support, contact **[hongson1812@gmail.com](mailto:hongson1812@gmail.com)**.
 
 ---
 
@@ -54,8 +56,12 @@
 * **Kiểm tra phiên bản mới tự động**: Mỗi khi mở ứng dụng (hoặc bấm **Kiểm tra cập nhật ngay** trong phần Cài đặt), 4AppleTV tự động kiểm tra bản dựng mới nhất từ kho phát hành chính thức.
 * **Tải & Cài đè `.ipa` ngay trong ứng dụng**: Khi có bản cập nhật mới, bạn chỉ cần bấm **"Tải .IPA & Mở trong App Ký"** — ứng dụng sẽ tải gói `4AppleTV.ipa` mới nhất về máy và mở bảng Chia sẻ (Share Sheet) để bạn chuyển thẳng sang *Feather, ESign, SideStore, AltStore, TrollStore* cập nhật đè mà không mất dữ liệu hay mã bản quyền.
 
-#### 🛡️ 6. Bảo Mật Cấp Độ Cao & Chẩn Đoán Minh Bạch
+#### 🌐 6. Đa Ngôn Ngữ Thông Minh (System / Tiếng Việt / English)
+* **Tự động theo ngôn ngữ máy hoặc chuyển trực tiếp 1 chạm**: 4AppleTV tự động nhận diện ngôn ngữ hệ thống iOS/iPadOS ngay lần đầu mở máy và cho phép đổi tức thì giữa **Theo hệ thống**, **Tiếng Việt** và **English** ngay tại nút 🌐 hoặc **Cài đặt ▸ Ngôn ngữ** mà không cần khởi động lại ứng dụng.
+
+#### 🛡️ 7. Bảo Mật Cấp Độ Cao, Chống Sao Chép BLA & Chẩn Đoán Minh Bạch
 * **Mọi thông tin nhạy cảm nằm trên thiết bị của bạn**: Mật khẩu Apple ID, khóa ghép đôi (Pairing Key) và chứng chỉ `.p12` được mã hóa và lưu trữ độc quyền trong **iOS Keychain** trên iPhone của bạn.
+* **Bảo vệ chống sao chép & dịch ngược tự động (BLA Counter-REA Shield)**: Nhân nhị phân `arm64` và gói Bundle được gia cố đa lớp, gắn kết mật mã định danh chính chủ của **4AppleTV** và kênh hỗ trợ chính thức **`hongson1812@gmail.com`**, đồng thời tương thích tuyệt đối với mọi công cụ ký iOS (*Feather, ESign, SideStore, AltStore, TrollStore, Sideloadly*).
 * **Nhật ký chẩn đoán thông minh (Redacted Diagnostics)**: Tự động ẩn toàn bộ thông tin nhạy cảm (PIN, mật khẩu, token) khi xuất log kiểm tra lỗi kết nối.
 
 ---

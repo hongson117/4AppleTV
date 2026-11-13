@@ -1,34 +1,34 @@
 {
   "name": "4AppleTV Official Repo",
   "identifier": "com.hongson117.4appletv.source",
-  "subtitle": "Điều khiển Apple TV toàn diện & Cài đặt .IPA không dây từ iPhone",
+  "subtitle": "All-in-One Apple TV Remote, App Launcher & Wireless .IPA Sideloader",
   "iconURL": "https://raw.githubusercontent.com/hongson117/4AppleTV/main/docs/icon.png",
   "website": "https://github.com/hongson117/4AppleTV",
   "apps": [
     {
       "name": "4AppleTV",
-      "bundleIdentifier": "com.hongson117.tvsideload",
-      "developerName": "HongSon Nguyen",
-      "subtitle": "Điều khiển Apple TV, Mở nhanh App & Sideload .IPA qua Wi-Fi",
-      "localizedDescription": "Ứng dụng tất-cả-trong-một dành cho người dùng Apple TV tại Việt Nam: Điều khiển từ xa siêu nhạy (Touchpad + D-Pad), nhập liệu Tiếng Việt có dấu, mở nhanh ứng dụng TV và cài đặt file .IPA lên Apple TV qua Wi-Fi bằng Apple ID miễn phí hoặc chứng chỉ .p12/.mobileprovision.",
+      "bundleIdentifier": "com.hongson117.fourappletv",
+      "developerName": "HongSon Nguyen (hongson1812@gmail.com)",
+      "subtitle": "Apple TV Remote, App Grid & Wireless .IPA Sideloader (VI / EN)",
+      "localizedDescription": "All-in-one companion for Apple TV: ultra-low-latency Remote (Touchpad + D-Pad), Vietnamese/English keyboard input, instant TV app launcher, and wireless .IPA sideloading via free Apple ID or .p12/.mobileprovision certificate. Supports System / Vietnamese / English UI and BLA Counter-REA protection.",
       "iconURL": "https://raw.githubusercontent.com/hongson117/4AppleTV/main/docs/icon.png",
       "tintColor": "0A84FF",
       "category": "utilities",
       "versions": [
         {
-          "version": "1.0.0",
-          "buildVersion": "38",
-          "date": "2026-11-07T10:40:00Z",
-          "downloadURL": "https://github.com/hongson117/4AppleTV/releases/download/v1.0.0/4AppleTV.ipa",
-          "size": 8305691,
+          "version": "1.1.0",
+          "buildVersion": "42",
+          "date": "2026-11-13T15:34:17Z",
+          "downloadURL": "https://github.com/hongson117/4AppleTV/releases/download/v1.1.0/4AppleTV.ipa",
+          "size": 8466358,
           "minOSVersion": "17.0",
-          "localizedDescription": "Bản phát hành 4AppleTV tích hợp Chế độ tự động cập nhật (Auto-Update), Sideload Pass v2.0, Điều khiển từ xa Apple TV (Touchpad/D-Pad), Bàn phím Tiếng Việt và Sideload .IPA không dây qua Wi-Fi."
+          "localizedDescription": "4AppleTV v1.1.0: Added English & System Default language support alongside Tiếng Việt, integrated official support contact (hongson1812@gmail.com), and hardened binary/bundle integrity with BLA Counter-REA anti-copying protection."
         }
       ],
       "appPermissions": {
         "entitlements": [],
         "privacy": {
-          "NSLocalNetworkUsageDescription": "Tìm kiếm, ghép đôi điều khiển và cài đặt ứng dụng không dây lên Apple TV trong cùng mạng Wi-Fi."
+          "NSLocalNetworkUsageDescription": "4AppleTV discovers, controls, launches apps, and installs (.ipa) apps wirelessly on Apple TVs on your local Wi-Fi network."
         }
       }
     }
