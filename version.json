@@ -1,11 +1,16 @@
 {
-  "version": "1.1.0",
-  "build": 42,
-  "releaseDate": "2026-11-13T15:30:00Z",
-  "downloadURL": "https://github.com/hongson117/4AppleTV/releases/latest/download/4AppleTV.ipa",
-  "releasePageURL": "https://github.com/hongson117/4AppleTV/releases/tag/v1.1.0",
-  "changelog": "• Bổ sung chế độ Đa ngôn ngữ: Theo hệ thống / Tiếng Việt / English (chuyển đổi trực tiếp trong ứng dụng không cần khởi động lại).\n• Tích hợp thông tin liên hệ & hỗ trợ chính thức hongson1812@gmail.com ngay tại màn hình Kích hoạt, Tài khoản và Cài đặt.\n• Gia cố lá chắn chống sao chép & chống dịch ngược tự động BLA v3.3.0 (Counter-REA Shield), gắn kết mật mã định danh chính chủ 4AppleTV và tương thích 100% với Feather, ESign, SideStore, AltStore, TrollStore.",
-  "changelogEn": "• Added Multi-Language support: System Default / English / Tiếng Việt (live in-app switching without restart).\n• Integrated official license & technical support contact (hongson1812@gmail.com) across Activation, Account, and Settings screens.\n• Hardened binary & bundle integrity with BLA v3.3.0 Counter-REA anti-copying protection, preserving 100% compatibility with Feather, ESign, SideStore, AltStore, and TrollStore.",
+  "version": "1.2.0",
+  "build": 43,
+  "gitCommit": "073ea87",
+  "releaseTag": "v1.2.0",
+  "assetName": "4AppleTV.ipa",
+  "assetSize": 8971915,
+  "releaseDate": "2026-11-14T03:23:46Z",
+  "downloadURL": "https://github.com/hongson117/4AppleTV/releases/download/v1.2.0/4AppleTV.ipa",
+  "releasePageURL": "https://github.com/hongson117/4AppleTV/releases/tag/v1.2.0",
+  "changelog": "4AppleTV v1.2.0 (Build 43):\n• Làm mới chứng chỉ đáng tin cậy (AutoRefreshCoordinator, xác minh sau cài đặt trên Apple TV, lịch sử 20 phiên, tự động làm mới bù & Phím tắt nâng cấp).\n• Cập nhật đã xác minh SHA-256 (tải trực tiếp .ipa kèm kiểm tra toàn vẹn, giữ nguyên tài khoản ký & dữ liệu, tích hợp ∞Sideload / SideStore / Feather).\n• Thư viện ứng dụng GitHub tích hợp sẵn (Orivio TV, Nuvio TV, Yattee, LiveContainerTV + hỗ trợ thêm nguồn GitHub / .ipa / source.json riêng).",
+  "changelogEn": "4AppleTV v1.2.0 (Build 43):\n• Reliable Auto-Refresh Coordinator with post-install Apple TV bundle verification, 20-session history, foreground catch-up, and upgraded Shortcuts Intent.\n• SHA-256 Verified Updates with streaming download, signer/container preservation guards, and ∞Sideload / SideStore / Feather handoff.\n• Integrated GitHub App Library featuring Orivio TV, Nuvio TV, Yattee, LiveContainerTV, plus 8-format custom GitHub / .ipa / source.json sources.",
   "mandatory": false,
-  "sha256": "23ebce7fa2055ff8b21222601b1126ecdb86417aa85bd8a0dbc83299f9ac61da"
+  "prerelease": false,
+  "sha256": "4b709b91dcb51c87dff12a09b2584caef6e62d4b4f6c3d7b551f624f4e5aad44"
 }
