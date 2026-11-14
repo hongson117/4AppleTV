@@ -2,6 +2,19 @@
   "schemaVersion": 1,
   "apps": [
     {
+      "id": "stremio",
+      "name": "Stremio",
+      "subtitleVi": "Trung tâm giải trí đa phương tiện chính thức cho Apple TV (tải trực tiếp .ipa)",
+      "subtitleEn": "Official Stremio media center for Apple TV (direct tvOS .ipa download)",
+      "category": "streaming",
+      "enabled": true,
+      "availability": "ready",
+      "directSourceURL": "https://dl.strem.io/apple/2.1.1b25/tvos/stremio_tvOS.ipa",
+      "includePrereleases": true,
+      "variantLockKey": "stremio-tvos",
+      "featured": true
+    },
+    {
       "id": "oriviotv",
       "name": "Orivio TV",
       "subtitleVi": "Trình phát đa phương tiện cao cấp cho Apple TV (ưu tiên biến thể Sideloadly)",
