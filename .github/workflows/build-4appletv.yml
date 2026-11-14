@@ -88,6 +88,8 @@ jobs:
               ios/TVSideload/Core/Models.swift \
               ios/TVSideload/Core/AutoRefreshCoordinator.swift \
               ios/TVSideload/Core/PackageDownloadService.swift \
+              ios/TVSideload/Core/PreparedInstallCache.swift \
+              ios/TVSideload/Core/LiveContainerBridgeService.swift \
               ios/TVSideload/Core/UpdateChecker.swift \
               ios/TVSideload/Core/GitHubLibraryService.swift \
               ios/TVSideload/Core/StorageCacheManager.swift \
