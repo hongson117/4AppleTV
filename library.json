@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "apps": [
+    {
+      "id": "oriviotv",
+      "name": "Orivio TV",
+      "subtitleVi": "Trình phát đa phương tiện cao cấp cho Apple TV (ưu tiên biến thể Sideloadly)",
+      "subtitleEn": "Modern media player for Apple TV (locks Sideloadly variant)",
+      "category": "streaming",
+      "enabled": true,
+      "availability": "ready",
+      "repo": "prehakanson-art/OrivioTVAppleTV",
+      "includePrereleases": false,
+      "preferredAssetPattern": "sideloadly\\.ipa$",
+      "variantLockKey": "sideloadly",
+      "featured": true
+    },
+    {
+      "id": "nuviotv",
+      "name": "Nuvio TV",
+      "subtitleVi": "Ứng dụng giải trí Nuvio cho tvOS (kênh Beta, tự lọc bản test/issue)",
+      "subtitleEn": "Nuvio streaming client for tvOS (Beta channel, filters issue/test builds)",
+      "category": "streaming",
+      "enabled": true,
+      "availability": "ready",
+      "repo": "bobsupra/NuvioTVOS",
+      "includePrereleases": true,
+      "preferredAssetPattern": "unsigned-release\\.ipa$",
+      "excludedAssetPattern": "(issue-|test)",
+      "variantLockKey": "unsigned-release",
+      "featured": true
+    },
+    {
+      "id": "yattee",
+      "name": "Yattee",
+      "subtitleVi": "Trình xem video riêng tư không quảng cáo cho tvOS",
+      "subtitleEn": "Privacy-oriented video frontend for tvOS",
+      "category": "video",
+      "enabled": true,
+      "availability": "ready",
+      "repo": "yattee/yattee",
+      "includePrereleases": true,
+      "preferredAssetPattern": "tvos\\.ipa$",
+      "excludedAssetPattern": "(ios|macos)",
+      "variantLockKey": "tvos",
+      "featured": false
+    },
+    {
+      "id": "livecontainertv",
+      "name": "LiveContainerTV",
+      "subtitleVi": "Hệ thống đa container cho Apple TV (tự nạp chứng chỉ ký khi cài từ 4AppleTV)",
+      "subtitleEn": "Multi-app container for Apple TV (automatic signing bootstrap via 4AppleTV)",
+      "category": "utilities",
+      "enabled": true,
+      "availability": "ready",
+      "sourceRepository": "hongson117/LiveContainerTV",
+      "repo": "hongson117/LiveContainerTV-releases",
+      "includePrereleases": false,
+      "preferredAssetPattern": "^LiveContainerTV.*\\.ipa$",
+      "variantLockKey": "livecontainertv",
+      "featured": true
+    }
+  ]
+}
