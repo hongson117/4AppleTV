@@ -16,14 +16,14 @@
       "category": "utilities",
       "versions": [
         {
-          "version": "1.2.2",
-          "buildVersion": "45",
-          "date": "2026-11-14T06:35:30Z",
-          "downloadURL": "https://github.com/hongson117/4AppleTV/releases/download/v1.2.2/4AppleTV.ipa",
-          "size": 9552193,
+          "version": "1.3.0",
+          "buildVersion": "46",
+          "date": "2026-11-14T08:48:16Z",
+          "downloadURL": "https://github.com/hongson117/4AppleTV/releases/download/v1.3.0/4AppleTV.ipa",
+          "size": 9768652,
           "minOSVersion": "17.0",
-          "localizedDescription": "4AppleTV v1.2.2 (Build 45):\n• Automatic on-device .deb → .ipa streaming conversion & Mach-O .so/.dylib signing for tvOS, with official Kodi 21.3 integrated into Library plus automatic mirror fallback & SHA-256 verification.\n• Explicit .p12 Certificate & Multi-Apple-ID Radio Selector: Clear interactive signer cards when installing from Library or local .ipa/.deb files, requiring an explicit tap whenever multiple certificates or Apple IDs are configured.\n• Seamless .p12 Certificate Updates: Profile Team ID alignment preserves 100% of Apple TV app data on updates, with guided certificate-renewal switching and Feather / ESign / GBox in-place self-update instructions.",
-          "sha256": "c9418eaebb5fd56235ea47eabd8203c4962fa0548e09739023f0e61122a9ee70"
+          "localizedDescription": "4AppleTV v1.3.0 (Build 46):\n• Deep LiveContainerTV v1.4 Integration & Default 4-App Pack (Kodi · Orivio · Nuvio · Stremio): View, import, activate/re-sign, and 1-tap launch apps inside LiveContainerTV with zero extra 3-app slots consumed (solving Kodi's 2-slot requirement).\n• Instant Apple TV Remote Reconnect & New TV Pairing: Eliminates stale-port Connecting hangs with a 3.5s TCP watchdog + live Bonjour handoff, and restores the prominent +TV / Switch TV picker with live Wi-Fi discovery.\n• 1-Button ∞Sideload Update & Smart Package Lifecycle: Fixes unresponsive self-update share sheet presentation, retains unpacked/converted .ipa across interrupted installs for 0s retry, and auto-deletes downloaded files immediately upon install success.",
+          "sha256": "832afe79cd93450a7b88c3cc239218c7311d6365324da872eda2f7fe0f3183e5"
         }
       ],
       "appPermissions": {
