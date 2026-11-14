@@ -1,16 +1,16 @@
 {
-  "version": "1.2.0",
-  "build": 43,
-  "gitCommit": "073ea87",
-  "releaseTag": "v1.2.0",
+  "version": "1.2.1",
+  "build": 44,
+  "gitCommit": "5a5d4ea",
+  "releaseTag": "v1.2.1",
   "assetName": "4AppleTV.ipa",
-  "assetSize": 8971915,
-  "releaseDate": "2026-11-14T03:23:46Z",
-  "downloadURL": "https://github.com/hongson117/4AppleTV/releases/download/v1.2.0/4AppleTV.ipa",
-  "releasePageURL": "https://github.com/hongson117/4AppleTV/releases/tag/v1.2.0",
-  "changelog": "4AppleTV v1.2.0 (Build 43):\n• Làm mới chứng chỉ đáng tin cậy (AutoRefreshCoordinator, xác minh sau cài đặt trên Apple TV, lịch sử 20 phiên, tự động làm mới bù & Phím tắt nâng cấp).\n• Cập nhật đã xác minh SHA-256 (tải trực tiếp .ipa kèm kiểm tra toàn vẹn, giữ nguyên tài khoản ký & dữ liệu, tích hợp ∞Sideload / SideStore / Feather).\n• Thư viện ứng dụng GitHub tích hợp sẵn (Orivio TV, Nuvio TV, Yattee, LiveContainerTV + hỗ trợ thêm nguồn GitHub / .ipa / source.json riêng).",
-  "changelogEn": "4AppleTV v1.2.0 (Build 43):\n• Reliable Auto-Refresh Coordinator with post-install Apple TV bundle verification, 20-session history, foreground catch-up, and upgraded Shortcuts Intent.\n• SHA-256 Verified Updates with streaming download, signer/container preservation guards, and ∞Sideload / SideStore / Feather handoff.\n• Integrated GitHub App Library featuring Orivio TV, Nuvio TV, Yattee, LiveContainerTV, plus 8-format custom GitHub / .ipa / source.json sources.",
+  "assetSize": 9298656,
+  "releaseDate": "2026-11-14T04:28:38Z",
+  "downloadURL": "https://github.com/hongson117/4AppleTV/releases/download/v1.2.1/4AppleTV.ipa",
+  "releasePageURL": "https://github.com/hongson117/4AppleTV/releases/tag/v1.2.1",
+  "changelog": "4AppleTV v1.2.1 (Build 44):\n• Biểu tượng ứng dụng 4AppleTV 3D mới với tông màu xanh ngọc bích tươi sáng, nổi bật rõ nét trên màn hình chính iOS.\n• Tab Ứng dụng (TV Apps): Bổ sung nút xoá nhanh từng icon và dọn hàng loạt các ứng dụng đã gỡ trên TV (Unverified), đồng bộ hai chiều với danh sách làm mới.\n• Thư viện Ứng dụng đa năng (Library): Đổi tên gọn thành Thư viện, tích hợp sẵn Stremio tvOS cùng Orivio TV, Nuvio TV, Yattee, LiveContainerTV; hỗ trợ dán và cài đặt ngay từ link tải trực tiếp .ipa (HTTPS), GitHub và source.json.\n• Quản lý & Dọn bộ nhớ đệm (Clear Cache): Chống phình dung lượng khi cài nhiều file .ipa nhưng vẫn bảo toàn an toàn gói gia hạn 7 ngày, ghép đôi và tài khoản.",
+  "changelogEn": "4AppleTV v1.2.1 (Build 44):\n• Redesigned brighter 3D 4AppleTV app icon for crisp visibility on dark iOS Home Screens.\n• TV Apps Grid: Added individual and 1-tap bulk removal for deleted / Unverified TV app icons with two-way Auto-Refresh sync.\n• Universal App Library: Renamed from GitHub Library to Library, added curated Stremio tvOS alongside Orivio TV, Nuvio TV, Yattee & LiveContainerTV, plus 1-tap direct HTTPS .ipa download & install.\n• Storage & Clear Cache Manager: Reclaim staging, Inbox, and orphaned .ipa space safely while preserving active 7-day renewal packages, pairings, and accounts.",
   "mandatory": false,
   "prerelease": false,
-  "sha256": "4b709b91dcb51c87dff12a09b2584caef6e62d4b4f6c3d7b551f624f4e5aad44"
+  "sha256": "929c7811c02a7f1383c5c4b4f8ad3487b5b705631e868745f196ad357e8675e2"
 }

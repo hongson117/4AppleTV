@@ -1,7 +1,7 @@
 {
   "name": "4AppleTV Official Repo",
   "identifier": "com.hongson117.4appletv.source",
-  "subtitle": "All-in-One Apple TV Remote, App Launcher, GitHub Library & Wireless .IPA Sideloader",
+  "subtitle": "All-in-One Apple TV Remote, App Launcher, Universal App Library & Wireless .IPA Sideloader",
   "iconURL": "https://raw.githubusercontent.com/hongson117/4AppleTV/main/docs/icon.png",
   "website": "https://github.com/hongson117/4AppleTV",
   "apps": [
@@ -9,21 +9,21 @@
       "name": "4AppleTV",
       "bundleIdentifier": "com.hongson117.fourappletv",
       "developerName": "HongSon Nguyen (hongson1812@gmail.com)",
-      "subtitle": "Apple TV Remote, GitHub App Library & Wireless .IPA Sideloader (VI / EN)",
-      "localizedDescription": "All-in-one companion for Apple TV: ultra-low-latency Remote (Touchpad + D-Pad), Vietnamese/English keyboard input, instant TV app launcher, curated & custom GitHub tvOS app library (Orivio TV, Nuvio TV, Yattee, LiveContainerTV), reliable auto-refresh, verified SHA-256 updates, and wireless .IPA sideloading via free Apple ID or .p12 certificate.",
+      "subtitle": "Apple TV Remote, App Library & Wireless .IPA Sideloader (VI / EN)",
+      "localizedDescription": "All-in-one companion for Apple TV: ultra-low-latency Remote (Touchpad + D-Pad), Vietnamese/English keyboard input, instant TV app launcher with Unverified cleanup, curated & custom tvOS App Library (Orivio TV, Nuvio TV, Stremio, Yattee, LiveContainerTV, plus direct HTTPS .ipa & GitHub sources), smart Clear Cache manager, reliable auto-refresh, verified SHA-256 updates, and wireless .IPA sideloading via free Apple ID or .p12 certificate.",
       "iconURL": "https://raw.githubusercontent.com/hongson117/4AppleTV/main/docs/icon.png",
       "tintColor": "0A84FF",
       "category": "utilities",
       "versions": [
         {
-          "version": "1.2.0",
-          "buildVersion": "43",
-          "date": "2026-11-14T03:23:46Z",
-          "downloadURL": "https://github.com/hongson117/4AppleTV/releases/download/v1.2.0/4AppleTV.ipa",
-          "size": 8971915,
+          "version": "1.2.1",
+          "buildVersion": "44",
+          "date": "2026-11-14T04:28:38Z",
+          "downloadURL": "https://github.com/hongson117/4AppleTV/releases/download/v1.2.1/4AppleTV.ipa",
+          "size": 9298656,
           "minOSVersion": "17.0",
-          "localizedDescription": "4AppleTV v1.2.0 (Build 43):\n• Reliable Auto-Refresh Coordinator with post-install Apple TV bundle verification, 20-session history, foreground catch-up, and upgraded Shortcuts Intent.\n• SHA-256 Verified Updates with streaming download, signer/container preservation guards, and ∞Sideload / SideStore / Feather handoff.\n• Integrated GitHub App Library featuring Orivio TV, Nuvio TV, Yattee, LiveContainerTV, plus 8-format custom GitHub / .ipa / source.json sources.",
-          "sha256": "4b709b91dcb51c87dff12a09b2584caef6e62d4b4f6c3d7b551f624f4e5aad44"
+          "localizedDescription": "4AppleTV v1.2.1 (Build 44):\n• Redesigned brighter 3D 4AppleTV app icon for crisp visibility on dark iOS Home Screens.\n• TV Apps Grid: Added individual and 1-tap bulk removal for deleted / Unverified TV app icons with two-way Auto-Refresh sync.\n• Universal App Library: Renamed from GitHub Library to Library, added curated Stremio tvOS alongside Orivio TV, Nuvio TV, Yattee & LiveContainerTV, plus 1-tap direct HTTPS .ipa download & install.\n• Storage & Clear Cache Manager: Reclaim staging, Inbox, and orphaned .ipa space safely while preserving active 7-day renewal packages, pairings, and accounts.",
+          "sha256": "929c7811c02a7f1383c5c4b4f8ad3487b5b705631e868745f196ad357e8675e2"
         }
       ],
       "appPermissions": {
