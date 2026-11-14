@@ -9,21 +9,21 @@
       "name": "4AppleTV",
       "bundleIdentifier": "com.hongson117.fourappletv",
       "developerName": "HongSon Nguyen (hongson1812@gmail.com)",
-      "subtitle": "Apple TV Remote, App Library & Wireless .IPA Sideloader (VI / EN)",
-      "localizedDescription": "All-in-one companion for Apple TV: ultra-low-latency Remote (Touchpad + D-Pad), Vietnamese/English keyboard input, instant TV app launcher with Unverified cleanup, curated & custom tvOS App Library (Orivio TV, Nuvio TV, Stremio, Yattee, LiveContainerTV, plus direct HTTPS .ipa & GitHub sources), smart Clear Cache manager, reliable auto-refresh, verified SHA-256 updates, and wireless .IPA sideloading via free Apple ID or .p12 certificate.",
+      "subtitle": "Apple TV Remote, App Library & Wireless .IPA / .DEB Sideloader (VI / EN)",
+      "localizedDescription": "All-in-one companion for Apple TV: ultra-low-latency Remote (Touchpad + D-Pad), Vietnamese/English keyboard input, instant TV app launcher with Unverified cleanup, curated & custom tvOS App Library (Kodi, Stremio, Orivio TV, Nuvio TV, Yattee, LiveContainerTV, plus direct HTTPS .ipa/.deb auto-conversion & GitHub sources), explicit .p12 / multi-Apple-ID signer selector, smart Clear Cache manager, reliable auto-refresh, verified SHA-256 updates, and wireless sideloading via free Apple ID or paid .p12 certificate.",
       "iconURL": "https://raw.githubusercontent.com/hongson117/4AppleTV/main/docs/icon.png",
       "tintColor": "0A84FF",
       "category": "utilities",
       "versions": [
         {
-          "version": "1.2.1",
-          "buildVersion": "44",
-          "date": "2026-11-14T04:28:38Z",
-          "downloadURL": "https://github.com/hongson117/4AppleTV/releases/download/v1.2.1/4AppleTV.ipa",
-          "size": 9298656,
+          "version": "1.2.2",
+          "buildVersion": "45",
+          "date": "2026-11-14T06:35:30Z",
+          "downloadURL": "https://github.com/hongson117/4AppleTV/releases/download/v1.2.2/4AppleTV.ipa",
+          "size": 9552193,
           "minOSVersion": "17.0",
-          "localizedDescription": "4AppleTV v1.2.1 (Build 44):\n• Redesigned brighter 3D 4AppleTV app icon for crisp visibility on dark iOS Home Screens.\n• TV Apps Grid: Added individual and 1-tap bulk removal for deleted / Unverified TV app icons with two-way Auto-Refresh sync.\n• Universal App Library: Renamed from GitHub Library to Library, added curated Stremio tvOS alongside Orivio TV, Nuvio TV, Yattee & LiveContainerTV, plus 1-tap direct HTTPS .ipa download & install.\n• Storage & Clear Cache Manager: Reclaim staging, Inbox, and orphaned .ipa space safely while preserving active 7-day renewal packages, pairings, and accounts.",
-          "sha256": "929c7811c02a7f1383c5c4b4f8ad3487b5b705631e868745f196ad357e8675e2"
+          "localizedDescription": "4AppleTV v1.2.2 (Build 45):\n• Automatic on-device .deb → .ipa streaming conversion & Mach-O .so/.dylib signing for tvOS, with official Kodi 21.3 integrated into Library plus automatic mirror fallback & SHA-256 verification.\n• Explicit .p12 Certificate & Multi-Apple-ID Radio Selector: Clear interactive signer cards when installing from Library or local .ipa/.deb files, requiring an explicit tap whenever multiple certificates or Apple IDs are configured.\n• Seamless .p12 Certificate Updates: Profile Team ID alignment preserves 100% of Apple TV app data on updates, with guided certificate-renewal switching and Feather / ESign / GBox in-place self-update instructions.",
+          "sha256": "c9418eaebb5fd56235ea47eabd8203c4962fa0548e09739023f0e61122a9ee70"
         }
       ],
       "appPermissions": {

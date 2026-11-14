@@ -1,16 +1,16 @@
 {
-  "version": "1.2.1",
-  "build": 44,
-  "gitCommit": "5a5d4ea",
-  "releaseTag": "v1.2.1",
+  "version": "1.2.2",
+  "build": 45,
+  "gitCommit": "29e7eaa",
+  "releaseTag": "v1.2.2",
   "assetName": "4AppleTV.ipa",
-  "assetSize": 9298656,
-  "releaseDate": "2026-11-14T04:28:38Z",
-  "downloadURL": "https://github.com/hongson117/4AppleTV/releases/download/v1.2.1/4AppleTV.ipa",
-  "releasePageURL": "https://github.com/hongson117/4AppleTV/releases/tag/v1.2.1",
-  "changelog": "4AppleTV v1.2.1 (Build 44):\n• Biểu tượng ứng dụng 4AppleTV 3D mới với tông màu xanh ngọc bích tươi sáng, nổi bật rõ nét trên màn hình chính iOS.\n• Tab Ứng dụng (TV Apps): Bổ sung nút xoá nhanh từng icon và dọn hàng loạt các ứng dụng đã gỡ trên TV (Unverified), đồng bộ hai chiều với danh sách làm mới.\n• Thư viện Ứng dụng đa năng (Library): Đổi tên gọn thành Thư viện, tích hợp sẵn Stremio tvOS cùng Orivio TV, Nuvio TV, Yattee, LiveContainerTV; hỗ trợ dán và cài đặt ngay từ link tải trực tiếp .ipa (HTTPS), GitHub và source.json.\n• Quản lý & Dọn bộ nhớ đệm (Clear Cache): Chống phình dung lượng khi cài nhiều file .ipa nhưng vẫn bảo toàn an toàn gói gia hạn 7 ngày, ghép đôi và tài khoản.",
-  "changelogEn": "4AppleTV v1.2.1 (Build 44):\n• Redesigned brighter 3D 4AppleTV app icon for crisp visibility on dark iOS Home Screens.\n• TV Apps Grid: Added individual and 1-tap bulk removal for deleted / Unverified TV app icons with two-way Auto-Refresh sync.\n• Universal App Library: Renamed from GitHub Library to Library, added curated Stremio tvOS alongside Orivio TV, Nuvio TV, Yattee & LiveContainerTV, plus 1-tap direct HTTPS .ipa download & install.\n• Storage & Clear Cache Manager: Reclaim staging, Inbox, and orphaned .ipa space safely while preserving active 7-day renewal packages, pairings, and accounts.",
+  "assetSize": 9552193,
+  "releaseDate": "2026-11-14T06:35:30Z",
+  "downloadURL": "https://github.com/hongson117/4AppleTV/releases/download/v1.2.2/4AppleTV.ipa",
+  "releasePageURL": "https://github.com/hongson117/4AppleTV/releases/tag/v1.2.2",
+  "changelog": "4AppleTV v1.2.2 (Build 45):\n• Tự động chuyển đổi & cài thẳng gói .deb sang .ipa chuẩn tvOS ngay trên iPhone/iPad (streaming không tốn bộ nhớ nháp), tích hợp sẵn Kodi 21.3 chính thức trong Thư viện kèm dự phòng đa máy chủ mirror & đối chiếu SHA-256.\n• Bước chọn Chứng chỉ (.p12) / Đa tài khoản Apple ID trực quan: Khi cài ứng dụng từ Thư viện hoặc từ Tệp (.ipa / .deb), hiển thị thẻ chọn rõ ràng giữa Chứng chỉ mua (.p12) và từng tài khoản Apple ID (#1/#2/#3 kèm số slot app), bắt buộc chạm chọn khi có nhiều chứng chỉ/tài khoản.\n• Chuẩn hoá cập nhật cho người dùng Chứng chỉ mua (.p12): Đồng bộ Team ID hồ sơ .mobileprovision để cập nhật giữ nguyên 100% dữ liệu trên Apple TV, hỗ trợ xác nhận đổi chứng chỉ khi gia hạn .p12 mới và hướng dẫn cập nhật trực tiếp cho Feather / ESign / GBox.",
+  "changelogEn": "4AppleTV v1.2.2 (Build 45):\n• Automatic on-device .deb → .ipa streaming conversion & Mach-O .so/.dylib signing for tvOS, with official Kodi 21.3 integrated into Library plus automatic mirror fallback & SHA-256 verification.\n• Explicit .p12 Certificate & Multi-Apple-ID Radio Selector: Clear interactive signer cards when installing from Library or local .ipa/.deb files, requiring an explicit tap whenever multiple certificates or Apple IDs are configured.\n• Seamless .p12 Certificate Updates: Profile Team ID alignment preserves 100% of Apple TV app data on updates, with guided certificate-renewal switching and Feather / ESign / GBox in-place self-update instructions.",
   "mandatory": false,
   "prerelease": false,
-  "sha256": "929c7811c02a7f1383c5c4b4f8ad3487b5b705631e868745f196ad357e8675e2"
+  "sha256": "c9418eaebb5fd56235ea47eabd8203c4962fa0548e09739023f0e61122a9ee70"
 }
