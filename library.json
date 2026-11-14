@@ -2,6 +2,19 @@
   "schemaVersion": 1,
   "apps": [
     {
+      "id": "kodi",
+      "name": "Kodi",
+      "subtitleVi": "Trung tâm giải trí đa phương tiện Kodi 21.3 chính thức cho Apple TV (tự đổi .deb sang .ipa)",
+      "subtitleEn": "Official Kodi 21.3 media center for Apple TV (auto-converts .deb to .ipa)",
+      "category": "streaming",
+      "enabled": true,
+      "availability": "ready",
+      "directSourceURL": "https://mirrors.kodi.tv/releases/darwin/tvos/org.xbmc.kodi-tvos_21.3-tvos.deb?https=1",
+      "includePrereleases": false,
+      "variantLockKey": "kodi-tvos",
+      "featured": true
+    },
+    {
       "id": "stremio",
       "name": "Stremio",
       "subtitleVi": "Trung tâm giải trí đa phương tiện chính thức cho Apple TV (tải trực tiếp .ipa)",

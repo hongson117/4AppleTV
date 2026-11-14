@@ -25,10 +25,10 @@
 **4AppleTV** là ứng dụng chuyên dụng dành cho người dùng **Apple TV HD / Apple TV 4K** trên nền tảng **iPhone và iPad (iOS/iPadOS 17.0+)**. Được thiết kế với kiến trúc lõi **Rust (`libtvs_core`)** kết hợp giao diện **SwiftUI Native Đa ngôn ngữ (`Theo hệ thống / Tiếng Việt / English`)**, **4AppleTV** hợp nhất trọn vẹn ba nhu cầu cốt lõi của người dùng Apple TV vào một ứng dụng duy nhất:
 
 1. **Điều khiển từ xa (Smart Remote) & Mở nhanh ứng dụng trên Apple TV** với độ trễ cực thấp qua giao thức Apple Companion Link chính gốc.
-2. **Thư viện ứng dụng tvOS đa năng (Library)** tích hợp sẵn (*Orivio TV, Nuvio TV, Stremio, Yattee, LiveContainerTV*) kèm khả năng dán trực tiếp link tải `.ipa` (HTTPS), kho GitHub `owner/repo`, link release/tag hoặc nguồn AltStore/Feather `source.json`.
-3. **Cài đặt, Làm mới ứng dụng (`.ipa` Sideloading) không dây qua mạng Wi-Fi & Dọn bộ nhớ đệm thông minh (Clear Cache)** trực tiếp từ iPhone lên Apple TV **mà không cần máy tính Mac, không cần Xcode và không cần dây cáp USB-C**.
+2. **Thư viện ứng dụng tvOS đa năng (Library)** tích hợp sẵn (*Kodi, Stremio, Orivio TV, Nuvio TV, Yattee, LiveContainerTV*) kèm khả năng dán trực tiếp link tải `.ipa` hoặc `.deb` (HTTPS — tự động chuyển đổi `.deb` sang `.ipa` chuẩn tvOS ngay trên điện thoại), kho GitHub `owner/repo`, link release/tag hoặc nguồn AltStore/Feather `source.json`.
+3. **Cài đặt, Chọn Chứng chỉ (`.p12` / Đa tài khoản Apple ID), Làm mới không dây & Dọn bộ nhớ đệm thông minh (Clear Cache)** trực tiếp từ iPhone lên Apple TV **mà không cần máy tính Mac, không cần Xcode và không cần dây cáp USB-C**.
 
-> 🇬🇧 **English Summary**: **4AppleTV** natively supports **English**, **Vietnamese**, and **System Default** languages (switchable live in-app via the 🌐 globe button or **Settings ▸ Language**). In **v1.2.1**, it features a brighter 3D app icon, an ultra-low-latency Apple TV Remote + 1-tap TV App Launcher (with individual & bulk `Unverified` deleted-app icon cleanup), a universal **tvOS App Library** (*Orivio TV, Nuvio TV, Stremio, Yattee, LiveContainerTV* + direct HTTPS `.ipa`, GitHub & `source.json` links), a smart **Clear Cache** storage manager, **SHA-256 verified updates**, and a reliable **Auto-Refresh Coordinator** with post-install bundle verification on Apple TV. For iOS/iPadOS 17.4+ sideloading, we officially recommend **[∞Sideload (InfinitySideload)](https://github.com/hongson117/InfinitySideload-releases)**, which shares Sideload Pass compatibility. Support & licensing: **[hongson1812@gmail.com](mailto:hongson1812@gmail.com)**.
+> 🇬🇧 **English Summary**: **4AppleTV** natively supports **English**, **Vietnamese**, and **System Default** languages (switchable live in-app via the 🌐 globe button or **Settings ▸ Language**). In **v1.2.2**, it features automatic on-device **`.deb → .ipa` streaming conversion** (including official **Kodi 21.3** tvOS `.deb`), an explicit **`.p12` Certificate & Multi-Apple-ID Radio Selector** before every install, a brighter 3D app icon, an ultra-low-latency Apple TV Remote + 1-tap TV App Launcher (with `Unverified` deleted-app icon cleanup), a universal **tvOS App Library** (*Kodi, Stremio, Orivio TV, Nuvio TV, Yattee, LiveContainerTV* + direct HTTPS `.ipa`/`.deb`, GitHub & `source.json` links), a smart **Clear Cache** storage manager, **SHA-256 verified updates**, and a reliable **Auto-Refresh Coordinator**. For iOS/iPadOS 17.4+ sideloading, we officially recommend **[∞Sideload (InfinitySideload)](https://github.com/hongson117/InfinitySideload-releases)**, which shares Sideload Pass compatibility. Support & licensing: **[hongson1812@gmail.com](mailto:hongson1812@gmail.com)**.
 
 ---
 
@@ -46,15 +46,16 @@
 * **Mở ứng dụng tức thì (1-Tap Launch)**: Chạm vào biểu tượng ứng dụng trên iPhone để mở ngay ứng dụng đó trên màn hình Apple TV và tự động chuyển sang **Điều khiển**.
 * **Dọn sạch icon ứng dụng đã gỡ trên TV (`Unverified`)**: Hỗ trợ bấm nút thùng rác xoá nhanh từng biểu tượng hoặc bấm **Xoá N Unverified** để dọn hàng loạt các app đã xoá trên Apple TV, đồng bộ hai chiều với danh sách gia hạn để không tự hiện lại.
 
-#### 📚 3. Thư Viện Ứng Dụng Đa Năng & Link `.IPA` Trực Tiếp (Tab **Cài app ▸ Thư viện**)
+#### 📚 3. Thư Viện Ứng Dụng Đa Năng & Tự Đổi `.DEB` → `.IPA` (Tab **Cài app ▸ Thư viện**)
 * **Kho tuyển chọn sẵn sàng cho tvOS**: Tải & cài đặt trực tiếp các ứng dụng nổi bật cho Apple TV:
+  * **Kodi 21.3** (`mirrors.kodi.tv` — tải gói `.deb` chính thức kèm đối chiếu `SHA-256` & tự động chuyển đổi sang `.ipa` chuẩn tvOS ngay trên máy)
+  * **Stremio** (`dl.strem.io` — tải trực tiếp gói `stremio_tvOS.ipa` chính thức cho Apple TV)
   * **Orivio TV** (`prehakanson-art/OrivioTVAppleTV`)
   * **Nuvio TV** (`bobsupra/NuvioTVOS` — tự động nhận diện bản tvOS pre-release chuẩn)
-  * **Stremio** (`dl.strem.io` — tải trực tiếp gói `stremio_tvOS.ipa` chính thức cho Apple TV)
   * **Yattee** (`yattee/yattee` — tự động lọc đúng gói `tvOS.ipa`)
   * **LiveContainerTV** ([`hongson117/LiveContainerTV-releases`](https://github.com/hongson117/LiveContainerTV-releases) — kèm mã kiểm tra toàn vẹn `SHA-256`)
-* **Hỗ trợ đầy đủ link tải trực tiếp `.ipa` & 8 định dạng nguồn**: Dán trực tiếp link HTTPS `.ipa` (bấm **Tải & Cài đặt ngay** hoặc lưu vào Thư viện), `owner/repo`, link GitHub repo, `/releases`, `/releases/tag/<tag>`, hoặc manifest `source.json` chuẩn AltStore / SideStore / Feather.
-* **Kiểm định an toàn trước khi ký**: Tự động kiểm tra `Info.plist` và kiến trúc nhị phân Mach-O `arm64` cho tvOS, chặn sớm các gói nhầm sang iOS/macOS hoặc Apple TV Simulator, đồng thời giữ khóa biến thể (variant lock) và tài khoản ký khi cập nhật để bảo vệ dữ liệu ứng dụng trên TV.
+* **Hỗ trợ đầy đủ link tải trực tiếp `.ipa` / `.deb` & 8 định dạng nguồn**: Dán trực tiếp link HTTPS `.ipa` hoặc `.deb` (kể cả link có query như `?https=1`), `owner/repo`, link GitHub repo, `/releases`, `/releases/tag/<tag>`, hoặc manifest `source.json` chuẩn AltStore / SideStore / Feather.
+* **Bước chọn Chứng chỉ (`.p12`) hoặc Tài khoản Apple ID rõ ràng**: Trước mỗi lần cài đặt, 4AppleTV hiển thị danh sách thẻ chọn trực quan giữa **Chứng chỉ mua (`.p12`)** và từng **Apple ID (`#1/#2/#3` kèm số slot app)**, yêu cầu chạm chọn rõ ràng khi máy có nhiều chứng chỉ hoặc tài khoản.
 
 #### 📦 4. Cài Đặt `.IPA` Không Dây & Dọn Bộ Nhớ Đệm (Tab **Cài app**)
 * **Hoàn toàn không cần máy tính (PC-Free / Mac-Free)**: Chọn file `.ipa` dành cho tvOS từ ứng dụng **Tệp (Files)** hoặc tải thẳng từ **Thư viện** và cài không dây sang Apple TV qua Wi-Fi/LAN.
