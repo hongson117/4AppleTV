@@ -74,15 +74,13 @@ jobs:
       - name: Run Swift protocol & v1.2.0 contract tests (sanitized output)
         run: |
           (
-            set -e
             swiftc -parse-as-library \
               ios/TVSideload/Core/LanguageManager.swift \
               ios/TVSideload/Remote/CompanionProtocol.swift \
               ios/TVSideload/Remote/DeviceRegistryAndDiscovery.swift \
               scripts/test_4appletv_protocol.swift \
-              -o /tmp/test_4appletv_protocol
-            /tmp/test_4appletv_protocol
-
+              -o /tmp/test_4appletv_protocol &&
+            /tmp/test_4appletv_protocol &&
             swiftc -parse-as-library \
               ios/TVSideload/Core/LanguageManager.swift \
               ios/TVSideload/Core/Models.swift \
@@ -94,7 +92,7 @@ jobs:
               ios/TVSideload/Core/GitHubLibraryService.swift \
               ios/TVSideload/Core/StorageCacheManager.swift \
               scripts/test_v1_2_contracts.swift \
-              -o /tmp/test_v1_2_contracts
+              -o /tmp/test_v1_2_contracts &&
             /tmp/test_v1_2_contracts
           ) >/tmp/swift-tests.log 2>&1 || {
             grep -E 'error:|ASSERTION FAILED' /tmp/swift-tests.log | sed -E 's|^/.*/ios/|ios/|; s|^/.*/scripts/|scripts/|' | head -n 25 || true
