@@ -16,20 +16,21 @@
       "category": "utilities",
       "versions": [
         {
-          "version": "1.3.2",
-          "buildVersion": "48",
-          "date": "2026-11-14T15:37:19Z",
-          "downloadURL": "https://github.com/hongson117/4AppleTV/releases/download/v1.3.2/4AppleTV.ipa",
-          "size": 10142199,
+          "version": "1.4.0",
+          "buildVersion": "49",
+          "date": "2026-11-15T07:32:47Z",
+          "downloadURL": "https://github.com/hongson117/4AppleTV/releases/download/v1.4.0/4AppleTV.ipa",
+          "size": 10588666,
           "minOSVersion": "17.0",
-          "localizedDescription": "4AppleTV v1.3.2 (Build 48):\n• Authentic Official App Icons in LiveContainerTV & App Library: Bundles crisp official upstream icons for Kodi, Orivio TV, Nuvio TV, Stremio, and Yattee; automatically purges stale v1 cached icons and eliminates misidentified deep addon icons (e.g. Kodi mouse controller resource) and fuzzy App Store search mismatches.\n• Seamless Kodi Sync & 1-Tap Launch in LiveContainerTV (:8228), plus the Default 4-App Pack (Kodi · Orivio · Nuvio · Stremio) in 1 slot.\n• Instant Remote reconnect, 1-button ∞Sideload self-update, and automatic cleanup of downloaded packages after install.",
-          "sha256": "41f6bb1685040d3272de4238195e2f3007db5686f2609b6d8294e92010d4cf2b"
+          "localizedDescription": "4AppleTV v1.4.0 (Build 49):\n• Wireless Apple TV Screenshot Capture & Built-In Screenshot Vault: Capture native 1080p / 4K PNG Apple TV screenshots wirelessly over Wi-Fi/LAN right from your iPhone (100% standalone with zero Mac/USB required, including automatic tvOS Developer Disk Image mounting after Apple TV reboots) and store them directly inside 4AppleTV's TV Photos Vault (with pinch-to-zoom viewer, per-TV filter, Share, Copy, iOS Files app access, and optional 1-tap Save to iPhone Photos).\n• Authentic Official App Icons in LiveContainerTV & App Library (Kodi, Orivio TV, Nuvio TV, Stremio, Yattee) plus the Default 4-App Pack in 1 slot.\n• Instant Remote reconnect, 1-button ∞Sideload self-update, and guaranteed screenshot vault preservation during Clear Cache.",
+          "sha256": "c699ac39700043dd2008a8704ea68ba9b3ebe48bfa24960a12eee1de1c7c9525"
         }
       ],
       "appPermissions": {
         "entitlements": [],
         "privacy": {
-          "NSLocalNetworkUsageDescription": "4AppleTV discovers, controls, launches apps, and installs (.ipa) apps wirelessly on Apple TVs on your local Wi-Fi network."
+          "NSLocalNetworkUsageDescription": "4AppleTV discovers, controls, captures screenshots, launches apps, and installs (.ipa) apps wirelessly on Apple TVs on your local Wi-Fi network.",
+          "NSPhotoLibraryAddUsageDescription": "4AppleTV saves copies of captured Apple TV screenshots to your iPhone Photo Library when you choose Save to Photos."
         }
       }
     }
