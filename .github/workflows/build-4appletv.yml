@@ -91,6 +91,7 @@ jobs:
               ios/TVSideload/Core/UpdateChecker.swift \
               ios/TVSideload/Core/GitHubLibraryService.swift \
               ios/TVSideload/Core/StorageCacheManager.swift \
+              ios/TVSideload/Core/ScreenshotStore.swift \
               scripts/test_v1_2_contracts.swift \
               -o /tmp/test_v1_2_contracts &&
             /tmp/test_v1_2_contracts
