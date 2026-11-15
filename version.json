@@ -1,16 +1,16 @@
 {
-  "version": "1.4.0",
-  "build": 49,
-  "gitCommit": "e248e36",
-  "releaseTag": "v1.4.0",
+  "version": "1.4.1",
+  "build": 50,
+  "gitCommit": "44cf9a6",
+  "releaseTag": "v1.4.1",
   "assetName": "4AppleTV.ipa",
-  "assetSize": 10588666,
-  "releaseDate": "2026-11-15T07:32:47Z",
-  "downloadURL": "https://github.com/hongson117/4AppleTV/releases/download/v1.4.0/4AppleTV.ipa",
-  "releasePageURL": "https://github.com/hongson117/4AppleTV/releases/tag/v1.4.0",
-  "changelog": "4AppleTV v1.4.0 (Build 49):\n• Chụp màn hình Apple TV không dây & Kho ảnh tích hợp ngay trong 4AppleTV: Chụp ảnh màn hình Apple TV độ phân giải gốc (1080p / 4K PNG) qua Wi-Fi/LAN trực tiếp từ iPhone (không cần máy Mac hay cáp USB, tự động kích hoạt Developer Disk Image tvOS ngay cả sau khi khởi động lại TV) và lưu trực tiếp vào Kho ảnh TV bên trong 4AppleTV (hỗ trợ phóng to toàn màn hình, lọc theo TV, chia sẻ, sao chép, truy cập qua ứng dụng Tệp và tuỳ chọn lưu vào Ảnh iPhone).\n• Chuẩn hoá 100% Logo gốc chính chủ cho ứng dụng trong LiveContainerTV & Thư viện (Kodi, Orivio TV, Nuvio TV, Stremio, Yattee) kèm Bộ 4 nguồn mặc định không tốn thêm slot 3 app.\n• Kết nối Remote siêu mượt, tự cập nhật 1 nút cho ∞Sideload & bảo vệ an toàn toàn bộ ảnh chụp Apple TV khi dọn bộ nhớ đệm.",
-  "changelogEn": "4AppleTV v1.4.0 (Build 49):\n• Wireless Apple TV Screenshot Capture & Built-In Screenshot Vault: Capture native 1080p / 4K PNG Apple TV screenshots wirelessly over Wi-Fi/LAN right from your iPhone (100% standalone with zero Mac/USB required, including automatic tvOS Developer Disk Image mounting after Apple TV reboots) and store them directly inside 4AppleTV's TV Photos Vault (with pinch-to-zoom viewer, per-TV filter, Share, Copy, iOS Files app access, and optional 1-tap Save to iPhone Photos).\n• Authentic Official App Icons in LiveContainerTV & App Library (Kodi, Orivio TV, Nuvio TV, Stremio, Yattee) plus the Default 4-App Pack in 1 slot.\n• Instant Remote reconnect, 1-button ∞Sideload self-update, and guaranteed screenshot vault preservation during Clear Cache.",
+  "assetSize": 10653552,
+  "releaseDate": "2026-11-15T08:34:44Z",
+  "downloadURL": "https://github.com/hongson117/4AppleTV/releases/download/v1.4.1/4AppleTV.ipa",
+  "releasePageURL": "https://github.com/hongson117/4AppleTV/releases/tag/v1.4.1",
+  "changelog": "4AppleTV v1.4.1 (Build 50):\n• Gia hạn nhanh định danh kiểu SideStore (misagent): Gia hạn chứng chỉ 7 ngày cho ứng dụng Apple TV trong ~2 giây mà KHÔNG cần cài lại gói .ipa hay đóng app đang chạy (hoạt động ngay cả khi file .ipa gốc đã bị dọn khỏi bộ nhớ đệm), tự động chuyển sang cài lại đầy đủ nếu chứng chỉ năm đã thay đổi.\n• Ghép đôi lại Apple TV không mất ứng dụng & Tự động nối lại hồ sơ cũ: Khi cùng một Apple TV bị rớt pair (kể cả khi tvOS đổi tên thành 'Bedroom (5)'), việc ghép đôi lại tự động giữ nguyên ID TV, ứng dụng đã cài, file .ipa lưu đệm và xoá cảnh báo 'Action Needed'.\n• Tinh gọn giao diện tab Điều khiển (Remote): Bỏ nút Screenshot và Kho ảnh TV khỏi màn hình Remote cho gọn gàng (vẫn truy cập nhanh trong tab Thiết bị và Cài đặt).",
+  "changelogEn": "4AppleTV v1.4.1 (Build 50):\n• SideStore-Style Fast Identity Refresh (misagent): Renew 7-day tvOS provisioning profiles in ~2 seconds without reinstalling the .ipa or interrupting running TV apps (even when the cached .ipa is absent), with automatic cryptographic continuity verification and seamless fallback to full re-sign + install when required.\n• Seamless Apple TV Re-Pairing & Orphaned App Auto-Healing: Re-pairing the same Apple TV after a pairing drop preserves its identity, installed app records, and cached .ipa packages (including automatic recovery of 'Bedroom (5)' orphaned apps and clearing stale 'no longer paired' errors).\n• Streamlined Remote Tab UI: Removed Screenshot and TV Photos from the Remote tab for a cleaner layout (still available under Devices & Settings).",
   "mandatory": false,
   "prerelease": false,
-  "sha256": "c699ac39700043dd2008a8704ea68ba9b3ebe48bfa24960a12eee1de1c7c9525"
+  "sha256": "ced680b38a87bb5c00af2489f4fb5014ab73de8d45a17ca281229ccda817ffb6"
 }
