@@ -214,7 +214,7 @@ jobs:
           BUILD=$(python3 -c "import json; print(json.load(open('release-files/version.json'))['build'])")
           TAG="v${VER}"
           SHA=$(python3 -c "import json; print(json.load(open('release-files/version.json'))['sha256'])")
-          NOTES=$(python3 -c "import json; d=json.load(open('release-files/version.json')); print(d['changelog'] + '\n\n---\n\n' + d['changelogEn'] + f'\n\n**SHA-256 (`4AppleTV.ipa`):** `{d[\"sha256\"]}`')")
+          NOTES=$(python3 -c 'import json; d=json.load(open("release-files/version.json")); bt=chr(96); print(d["changelog"] + "\n\n---\n\n" + d["changelogEn"] + f"\n\n**SHA-256 ({bt}4AppleTV.ipa{bt}):** {bt}{d[\"sha256\"]}{bt}")')
           printf "%s\n" "$NOTES" > /tmp/release-notes.md
 
           if gh release view "$TAG" >/dev/null 2>&1; then
