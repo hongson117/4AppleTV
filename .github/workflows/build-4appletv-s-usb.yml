@@ -58,8 +58,8 @@ jobs:
         run: |
           set -e
           if [[ "${{ matrix.platform }}" == "windows" ]]; then export RUSTFLAGS="-C target-feature=+crt-static"; fi
-          cargo test --locked --manifest-path ${{ matrix.platform == 'windows' && 'windows' || 'macos' }}/Cargo.toml > /tmp/support-tests.log 2>&1 || { echo 'Private CLI tests failed.'; grep -E 'error:|error\[E|test result|Caused by:|panicked at' /tmp/support-tests.log | tail -n 12 || true; exit 1; }
-          cargo build --locked --release --manifest-path ${{ matrix.platform == 'windows' && 'windows' || 'macos' }}/Cargo.toml > /tmp/support-build.log 2>&1 || { echo 'Private CLI compilation failed.'; grep -E 'error:|error\[E|Caused by:' /tmp/support-build.log | tail -n 12 || true; exit 1; }
+          cargo test --manifest-path ${{ matrix.platform == 'windows' && 'windows' || 'macos' }}/Cargo.toml > /tmp/support-tests.log 2>&1 || { echo 'Private CLI tests failed.'; grep -E 'error:|error\[E|test result|Caused by:|panicked at' /tmp/support-tests.log | tail -n 12 || true; exit 1; }
+          cargo build --release --manifest-path ${{ matrix.platform == 'windows' && 'windows' || 'macos' }}/Cargo.toml > /tmp/support-build.log 2>&1 || { echo 'Private CLI compilation failed.'; grep -E 'error:|error\[E|Caused by:' /tmp/support-build.log | tail -n 12 || true; exit 1; }
       - name: Build helper package
         shell: bash
         run: |
