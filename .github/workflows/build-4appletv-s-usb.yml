@@ -1,0 +1,74 @@
+name: Build 4AppleTV-S remote USB support
+on:
+  workflow_dispatch:
+    inputs:
+      source_sha:
+        description: Private source commit
+        required: true
+permissions:
+  contents: read
+jobs:
+  support:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-22.04
+            platform: linux
+            arch: x64
+          - os: windows-latest
+            platform: windows
+            arch: x64
+          - os: macos-15
+            platform: macos
+            arch: arm64
+          - os: macos-15-intel
+            platform: macos
+            arch: x64
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+    env:
+      CARGO_TERM_COLOR: never
+    steps:
+      - name: Validate source
+        shell: bash
+        env:
+          SOURCE_SHA: ${{ inputs.source_sha }}
+        run: '[[ "$SOURCE_SHA" =~ ^[0-9a-f]{40}$ ]]'
+      - uses: actions/checkout@v4
+        with:
+          repository: hongson117/TVSideload
+          ref: ${{ inputs.source_sha }}
+          ssh-key: ${{ secrets.TVSIDELOAD_SOURCE_READ_KEY }}
+          persist-credentials: false
+          show-progress: false
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: ${{ matrix.platform == 'windows' && 'windows' || 'macos' }}
+          cache-on-failure: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Linux desktop build dependencies
+        if: matrix.platform == 'linux'
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq python3-tk libssl-dev pkg-config
+      - name: Build native USB CLI
+        shell: bash
+        run: |
+          set -e
+          if [[ "${{ matrix.platform }}" == "windows" ]]; then export RUSTFLAGS="-C target-feature=+crt-static"; fi
+          cargo test --locked --manifest-path ${{ matrix.platform == 'windows' && 'windows' || 'macos' }}/Cargo.toml > /tmp/support-tests.log 2>&1 || { echo 'Private CLI tests failed.'; grep -E 'error:|error\[E|test result|Caused by:|panicked at' /tmp/support-tests.log | tail -n 12 || true; exit 1; }
+          cargo build --locked --release --manifest-path ${{ matrix.platform == 'windows' && 'windows' || 'macos' }}/Cargo.toml > /tmp/support-build.log 2>&1 || { echo 'Private CLI compilation failed.'; grep -E 'error:|error\[E|Caused by:' /tmp/support-build.log | tail -n 12 || true; exit 1; }
+      - name: Build helper package
+        shell: bash
+        run: |
+          set -e
+          python -m pip install pyinstaller==6.16.0 -r remote_support/requirements.txt httpx==0.28.1
+          python -m unittest discover -s remote_support -p 'test_*.py' > /tmp/coordinator-tests.log 2>&1 || { echo 'Coordinator tests failed.'; exit 1; }
+          GITHUB_SHA=${{ inputs.source_sha }} python remote_support/package.py ${{ matrix.platform }} ${{ matrix.arch }} > /tmp/helper-package.log 2>&1 || { echo 'Helper packaging failed.'; grep -E '^ERROR:|^ModuleNotFoundError:|^FileNotFoundError:|^RuntimeError:' /tmp/helper-package.log | tail -n 8 || true; exit 1; }
+      - uses: actions/upload-artifact@v4
+        with:
+          name: 4AppleTV-S-Support-${{ matrix.platform }}-${{ matrix.arch }}
+          path: out/*.zip
+          retention-days: 14
