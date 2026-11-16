@@ -1,0 +1,19 @@
+name: Verify 4AppleTV-S USB public endpoint
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  https:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Check product endpoint from outside Tailscale
+        shell: bash
+        run: |
+          set -e
+          curl --fail --connect-timeout 15 --max-time 30 https://us-exitnode.tail22bb81.ts.net/4appletv-s/health/live
+          code=$(curl --silent --output /dev/null --write-out "%{http_code}" --connect-timeout 15 --max-time 30 -X POST -H 'Content-Type: application/json' -d '{}' https://us-exitnode.tail22bb81.ts.net/4appletv-s/mcp/wrong)
+          test "$code" = 401
+          curl --fail --connect-timeout 15 --max-time 30 https://us-exitnode.tail22bb81.ts.net/health/live
+          echo '4AppleTV-S public HTTPS, key rejection and original root endpoint passed.'
