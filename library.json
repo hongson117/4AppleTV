@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "apps": [
+    {
+      "id": "kodi",
+      "name": "Kodi",
+      "subtitleVi": "Trung tâm giải trí đa phương tiện Kodi 21.3 chính thức cho Apple TV (tự đổi .deb sang .ipa, khuyên cài vào LiveContainerTV)",
+      "subtitleEn": "Official Kodi 21.3 media center for Apple TV (auto-converts .deb to .ipa, recommended inside LiveContainerTV)",
+      "category": "streaming",
+      "enabled": true,
+      "availability": "ready",
+      "directSourceURL": "https://mirrors.kodi.tv/releases/darwin/tvos/org.xbmc.kodi-tvos_21.3-tvos.deb?https=1",
+      "includePrereleases": false,
+      "variantLockKey": "kodi-tvos",
+      "featured": true
+    },
+    {
+      "id": "oriviotv",
+      "name": "Orivio TV",
+      "subtitleVi": "Trình phát đa phương tiện cao cấp cho Apple TV (ưu tiên biến thể Sideloadly)",
+      "subtitleEn": "Modern media player for Apple TV (locks Sideloadly variant)",
+      "category": "streaming",
+      "enabled": true,
+      "availability": "ready",
+      "repo": "prehakanson-art/OrivioTVAppleTV",
+      "includePrereleases": false,
+      "preferredAssetPattern": "sideloadly\\.ipa$",
+      "variantLockKey": "sideloadly",
+      "featured": true
+    },
+    {
+      "id": "nuviotv",
+      "name": "Nuvio TV",
+      "subtitleVi": "Ứng dụng giải trí Nuvio cho tvOS (kênh Beta, tự lọc bản test/issue)",
+      "subtitleEn": "Nuvio streaming client for tvOS (Beta channel, filters issue/test builds)",
+      "category": "streaming",
+      "enabled": true,
+      "availability": "ready",
+      "repo": "bobsupra/NuvioTVOS",
+      "includePrereleases": true,
+      "preferredAssetPattern": "unsigned-release\\.ipa$",
+      "excludedAssetPattern": "(issue-|test)",
+      "variantLockKey": "unsigned-release",
+      "featured": true
+    },
+    {
+      "id": "stremio",
+      "name": "Stremio",
+      "subtitleVi": "Trung tâm giải trí đa phương tiện chính thức cho Apple TV (tải trực tiếp .ipa)",
+      "subtitleEn": "Official Stremio media center for Apple TV (direct tvOS .ipa download)",
+      "category": "streaming",
+      "enabled": true,
+      "availability": "ready",
+      "directSourceURL": "https://dl.strem.io/apple/2.1.1b25/tvos/stremio_tvOS.ipa",
+      "includePrereleases": true,
+      "variantLockKey": "stremio-tvos",
+      "featured": true
+    },
+    {
+      "id": "livecontainertv",
+      "name": "LiveContainerTV",
+      "subtitleVi": "Kho đa container v1.4 cho Apple TV (chứa không giới hạn app chỉ tốn 1 slot, tự nạp chứng chỉ ký từ 4AppleTV)",
+      "subtitleEn": "Multi-app container v1.4 for Apple TV (unlimited apps in 1 slot, automatic signing bootstrap via 4AppleTV)",
+      "category": "utilities",
+      "enabled": true,
+      "availability": "ready",
+      "sourceRepository": "hongson117/LiveContainerTV",
+      "repo": "hongson117/LiveContainerTV-releases",
+      "includePrereleases": false,
+      "preferredAssetPattern": "^LiveContainerTV.*\\.ipa$",
+      "variantLockKey": "livecontainertv",
+      "featured": true
+    },
+    {
+      "id": "yattee",
+      "name": "Yattee",
+      "subtitleVi": "Trình xem video riêng tư không quảng cáo cho tvOS",
+      "subtitleEn": "Privacy-oriented video frontend for tvOS",
+      "category": "video",
+      "enabled": true,
+      "availability": "ready",
+      "repo": "yattee/yattee",
+      "includePrereleases": true,
+      "preferredAssetPattern": "tvos\\.ipa$",
+      "excludedAssetPattern": "(ios|macos)",
+      "variantLockKey": "tvos",
+      "featured": false
+    }
+  ]
+}

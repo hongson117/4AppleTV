@@ -1,0 +1,233 @@
+name: Build 4AppleTV Lite Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_ref:
+        description: Private source branch or commit in hongson117/TVSideload
+        required: false
+        default: '4AppleTV-Lite'
+      publish_branch:
+        description: Publish verified 4AppleTV-Lite.ipa and manifests directly to lite branch (no GitHub Release)
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: public-4appletv-lite-build
+  cancel-in-progress: false
+
+jobs:
+  core-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: hongson117/TVSideload
+          ref: ${{ inputs.source_ref || '4AppleTV-Lite' }}
+          ssh-key: ${{ secrets.TVSIDELOAD_SOURCE_READ_KEY }}
+          persist-credentials: false
+          show-progress: false
+          submodules: false
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: core
+      - name: Run private Rust core unit tests (sanitized output)
+        run: |
+          if cargo test --manifest-path core/Cargo.toml >/tmp/core-tests.log 2>&1; then
+            echo "Rust core tests passed."
+          else
+            grep -E '^error(\[[A-Z0-9]+\])?:|^test .* FAILED|^thread .* panicked' /tmp/core-tests.log | head -n 30 || true
+            echo "Rust core tests failed; private source snippets were not uploaded."
+            exit 1
+          fi
+
+  ios:
+    needs: [core-tests]
+    runs-on: macos-15
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: hongson117/TVSideload
+          ref: ${{ inputs.source_ref || '4AppleTV-Lite' }}
+          ssh-key: ${{ secrets.TVSIDELOAD_SOURCE_READ_KEY }}
+          persist-credentials: false
+          show-progress: false
+          submodules: false
+      - name: Record private source commit
+        run: echo "SOURCE_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-apple-ios
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: core
+          key: ios-4appletv-lite
+      - name: Run Swift protocol & Lite contract tests (sanitized output)
+        run: |
+          (
+            swiftc -parse-as-library \
+              ios/TVSideload/Core/LanguageManager.swift \
+              ios/TVSideload/Remote/CompanionProtocol.swift \
+              ios/TVSideload/Remote/DeviceRegistryAndDiscovery.swift \
+              scripts/test_4appletv_protocol.swift \
+              -o /tmp/test_4appletv_protocol &&
+            /tmp/test_4appletv_protocol &&
+            swiftc -parse-as-library \
+              ios/TVSideload/Core/LanguageManager.swift \
+              ios/TVSideload/Core/Models.swift \
+              ios/TVSideload/Core/AutoRefreshCoordinator.swift \
+              ios/TVSideload/Core/PackageDownloadService.swift \
+              ios/TVSideload/Core/PreparedInstallCache.swift \
+              ios/TVSideload/Core/LiveContainerBridgeService.swift \
+              ios/TVSideload/Core/UpdateChecker.swift \
+              ios/TVSideload/Core/GitHubLibraryService.swift \
+              ios/TVSideload/Core/StorageCacheManager.swift \
+              ios/TVSideload/Core/ScreenshotStore.swift \
+              scripts/test_v1_2_contracts.swift \
+              -o /tmp/test_v1_2_contracts &&
+            /tmp/test_v1_2_contracts
+          ) >/tmp/swift-tests.log 2>&1 || {
+            grep -E 'error:|ASSERTION FAILED' /tmp/swift-tests.log | sed -E 's|^/.*/ios/|ios/|; s|^/.*/scripts/|scripts/|' | head -n 25 || true
+            echo "Swift contract tests failed; private source snippets were not uploaded."
+            exit 1
+          }
+          grep -E '^✅' /tmp/swift-tests.log || echo "Swift protocol & Lite contract tests passed."
+      - name: Build private Rust core (aarch64-apple-ios with BLA shield)
+        run: |
+          export IPHONEOS_DEPLOYMENT_TARGET=17.0
+          export RUSTFLAGS="--remap-path-prefix=${GITHUB_WORKSPACE}=/src --remap-path-prefix=${HOME}/.cargo=/deps/cargo"
+          cargo build --release --target aarch64-apple-ios --manifest-path core/Cargo.toml >/tmp/core-ios.log 2>&1 || {
+            grep -E '^error(\[[A-Z0-9]+\])?:' /tmp/core-ios.log | head -n 25 || true
+            echo "Rust iOS core build failed; private source snippets were not uploaded."
+            exit 1
+          }
+          test -f core/target/aarch64-apple-ios/release/libtvs_core.a
+          echo "Built libtvs_core.a successfully."
+      - name: Generate Xcode project & build unsigned iOS app
+        run: |
+          brew install xcodegen >/tmp/brew.log 2>&1 || true
+          xcodegen generate >/tmp/xcodegen.log 2>&1
+          xcodebuild -project TVSideload.xcodeproj -scheme TVSideload -configuration Release \
+            -sdk iphoneos -destination 'generic/platform=iOS' -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" build >/tmp/xcodebuild.log 2>&1 || {
+            grep -E 'error:' /tmp/xcodebuild.log | sed -E 's|^/.*/ios/|ios/|' | head -n 30 || true
+            echo "iOS build failed; private source snippets were not uploaded."
+            exit 1
+          }
+          echo "Unsigned Release iOS build succeeded."
+      - name: BLA Counter-REA Hardening, Lite Gate & Manifest Packaging
+        run: |
+          APP=build/Build/Products/Release-iphoneos/TVSideload.app
+          /usr/libexec/PlistBuddy -c "Set :TVSGitSHA ${SOURCE_SHA:0:7}" "$APP/Info.plist"
+          test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$APP/Info.plist")" = "com.hongson117.fourappletv.lite"
+          test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleDisplayName' "$APP/Info.plist")" = "4AppleTV Lite"
+          BUNDLE_VER=$(/usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" "$APP/Info.plist")
+          BUNDLE_BUILD=$(/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" "$APP/Info.plist")
+          test -f "$APP/BundledAppLibrary.json"
+          mkdir -p out/Payload publish
+          cp -R "$APP" out/Payload/
+
+          # 1. BLA packaging gate lint + Mach-O Counter-REA verification
+          npx -y bla-agents@3.3.0 lint .
+          npx -y bla-agents@3.3.0 verify out/Payload/TVSideload.app/TVSideload
+
+          # 2. Apple PropertyList & Downstream iOS Re-Signing Verification
+          plutil -lint out/Payload/TVSideload.app/Info.plist
+          plutil -lint out/Payload/TVSideload.app/EnclaveAttestation.plist
+          rm -rf /tmp/SignTest.app && cp -R out/Payload/TVSideload.app /tmp/SignTest.app
+          codesign --force --sign - --timestamp=none /tmp/SignTest.app
+          codesign --verify --deep --strict --verbose=2 /tmp/SignTest.app >/dev/null 2>&1
+          rm -rf /tmp/SignTest.app
+
+          # 3. Cleartext secret & removed license server gate check
+          BIN=out/Payload/TVSideload.app/TVSideload
+          ! strings -a "$BIN" | grep -qiE "0S0VFmFyr0NCaIoeO|BEGIN PRIVATE|MC4CAQAw|2a79f805197aed35|tvsideload-license\.hongson1812\.workers\.dev"
+
+          # 4. Package unsigned Lite IPA & SHA-256 manifests
+          (cd out && zip -qry ../publish/4AppleTV-Lite.ipa Payload)
+          IPA_SIZE=$(stat -f%z publish/4AppleTV-Lite.ipa)
+          IPA_SHA256=$(shasum -a 256 publish/4AppleTV-Lite.ipa | awk '{print $1}')
+          (cd publish && shasum -a 256 4AppleTV-Lite.ipa > SHA256SUMS.txt)
+          python3 scripts/make_source.py --version-json "$BUNDLE_VER" "$IPA_SIZE" "$BUNDLE_BUILD" "$IPA_SHA256" "${SOURCE_SHA:0:7}" > publish/version.json
+          python3 scripts/make_source.py "$BUNDLE_VER" "$IPA_SIZE" "$BUNDLE_BUILD" "$IPA_SHA256" "${SOURCE_SHA:0:7}" > publish/source.json
+
+          python3 - <<'PY'
+          import datetime, json, os, pathlib
+          ver_doc = json.loads(pathlib.Path('publish/version.json').read_text(encoding='utf-8'))
+          pathlib.Path('publish/BUILD-SOURCE.json').write_text(json.dumps({
+              'product': '4AppleTV Lite',
+              'edition': 'lite',
+              'bundle_id': 'com.hongson117.fourappletv.lite',
+              'version': ver_doc['version'],
+              'build': ver_doc['build'],
+              'source_repository': 'hongson117/TVSideload (PRIVATE)',
+              'source_branch': '4AppleTV-Lite',
+              'source_commit': os.environ['SOURCE_SHA'],
+              'release_repository': os.environ.get('GITHUB_REPOSITORY', 'hongson117/4AppleTV'),
+              'public_branch': 'lite',
+              'workflow_run_id': os.environ.get('GITHUB_RUN_ID', ''),
+              'ipa_sha256': ver_doc['sha256'],
+              'ipa_size': ver_doc['assetSize'],
+              'built_at': datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'),
+              'unsigned': True
+          }, indent=2) + '\n', encoding='utf-8')
+          PY
+          ls -la publish/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: 4AppleTV-Lite-public-release-${{ github.run_number }}
+          retention-days: 5
+          if-no-files-found: error
+          path: |
+            publish/4AppleTV-Lite.ipa
+            publish/version.json
+            publish/source.json
+            publish/SHA256SUMS.txt
+            publish/BUILD-SOURCE.json
+
+  publish-lite-branch:
+    if: ${{ inputs.publish_branch }}
+    needs: [core-tests, ios]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: lite
+          persist-credentials: true
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: 4AppleTV-Lite-public-release-*
+          path: release-files
+          merge-multiple: true
+      - name: Publish 4AppleTV-Lite.ipa & manifests directly to lite branch
+        run: |
+          VER=$(python3 -c "import json; print(json.load(open('release-files/version.json'))['version'])")
+          BUILD=$(python3 -c "import json; print(json.load(open('release-files/version.json'))['build'])")
+          SHA=$(python3 -c "import json; print(json.load(open('release-files/version.json'))['sha256'])")
+
+          cp release-files/4AppleTV-Lite.ipa 4AppleTV-Lite.ipa
+          cp release-files/version.json version.json
+          cp release-files/source.json source.json
+          cp release-files/SHA256SUMS.txt SHA256SUMS.txt
+          cp release-files/BUILD-SOURCE.json BUILD-SOURCE.json
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add 4AppleTV-Lite.ipa version.json source.json SHA256SUMS.txt BUILD-SOURCE.json
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(release): publish 4AppleTV Lite v${VER} (Build ${BUILD}) [SHA-256: ${SHA:0:12}]"
+            git push origin HEAD:lite
+          else
+            echo "lite branch artifacts already up to date."
+          fi
