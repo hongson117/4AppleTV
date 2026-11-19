@@ -16,14 +16,14 @@
       "category": "utilities",
       "versions": [
         {
-          "version": "1.4.1",
-          "buildVersion": "50",
-          "date": "2026-11-15T08:34:44Z",
-          "downloadURL": "https://github.com/hongson117/4AppleTV/releases/download/v1.4.1/4AppleTV.ipa",
-          "size": 10653552,
+          "version": "1.4.2",
+          "buildVersion": "51",
+          "date": "2026-11-19T08:49:13Z",
+          "downloadURL": "https://github.com/hongson117/4AppleTV/releases/download/v1.4.2/4AppleTV.ipa",
+          "size": 10678660,
           "minOSVersion": "17.0",
-          "localizedDescription": "4AppleTV v1.4.1 (Build 50):\n• SideStore-Style Fast Identity Refresh (misagent): Renew 7-day tvOS provisioning profiles in ~2 seconds without reinstalling the .ipa or interrupting running TV apps (even when the cached .ipa is absent), with automatic cryptographic continuity verification and seamless fallback to full re-sign + install when required.\n• Seamless Apple TV Re-Pairing & Orphaned App Auto-Healing: Re-pairing the same Apple TV after a pairing drop preserves its identity, installed app records, and cached .ipa packages (including automatic recovery of 'Bedroom (5)' orphaned apps and clearing stale 'no longer paired' errors).\n• Streamlined Remote Tab UI: Removed Screenshot and TV Photos from the Remote tab for a cleaner layout (still available under Devices & Settings).",
-          "sha256": "ced680b38a87bb5c00af2489f4fb5014ab73de8d45a17ca281229ccda817ffb6"
+          "localizedDescription": "4AppleTV v1.4.2 (Build 51):\n• Synchronized 7-day LiveContainerTV expiry display: Fast misagent profile renewals now automatically mirror the Apple-signed .mobileprovision into LiveContainerTV via HouseArrest (even when TV app is closed) and push live updates over :8228 (/api/v1/sync-expiry), fixing the 7-day vs 4-day mismatch.\n• Retroactive Auto-Healing: Automatically reconciles already-refreshed LiveContainerTV hosts whenever 4AppleTV connects.\n• Keeps ~2-second fast misagent refresh and seamless TV re-pair app recovery.",
+          "sha256": "196b71e4859193d3cc3e24f356491fb2896ba94e732cab4cfdd16c4219199aa9"
         }
       ],
       "appPermissions": {

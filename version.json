@@ -1,16 +1,16 @@
 {
-  "version": "1.4.1",
-  "build": 50,
-  "gitCommit": "44cf9a6",
-  "releaseTag": "v1.4.1",
+  "version": "1.4.2",
+  "build": 51,
+  "gitCommit": "6b42e15",
+  "releaseTag": "v1.4.2",
   "assetName": "4AppleTV.ipa",
-  "assetSize": 10653552,
-  "releaseDate": "2026-11-15T08:34:44Z",
-  "downloadURL": "https://github.com/hongson117/4AppleTV/releases/download/v1.4.1/4AppleTV.ipa",
-  "releasePageURL": "https://github.com/hongson117/4AppleTV/releases/tag/v1.4.1",
-  "changelog": "4AppleTV v1.4.1 (Build 50):\n• Gia hạn nhanh định danh kiểu SideStore (misagent): Gia hạn chứng chỉ 7 ngày cho ứng dụng Apple TV trong ~2 giây mà KHÔNG cần cài lại gói .ipa hay đóng app đang chạy (hoạt động ngay cả khi file .ipa gốc đã bị dọn khỏi bộ nhớ đệm), tự động chuyển sang cài lại đầy đủ nếu chứng chỉ năm đã thay đổi.\n• Ghép đôi lại Apple TV không mất ứng dụng & Tự động nối lại hồ sơ cũ: Khi cùng một Apple TV bị rớt pair (kể cả khi tvOS đổi tên thành 'Bedroom (5)'), việc ghép đôi lại tự động giữ nguyên ID TV, ứng dụng đã cài, file .ipa lưu đệm và xoá cảnh báo 'Action Needed'.\n• Tinh gọn giao diện tab Điều khiển (Remote): Bỏ nút Screenshot và Kho ảnh TV khỏi màn hình Remote cho gọn gàng (vẫn truy cập nhanh trong tab Thiết bị và Cài đặt).",
-  "changelogEn": "4AppleTV v1.4.1 (Build 50):\n• SideStore-Style Fast Identity Refresh (misagent): Renew 7-day tvOS provisioning profiles in ~2 seconds without reinstalling the .ipa or interrupting running TV apps (even when the cached .ipa is absent), with automatic cryptographic continuity verification and seamless fallback to full re-sign + install when required.\n• Seamless Apple TV Re-Pairing & Orphaned App Auto-Healing: Re-pairing the same Apple TV after a pairing drop preserves its identity, installed app records, and cached .ipa packages (including automatic recovery of 'Bedroom (5)' orphaned apps and clearing stale 'no longer paired' errors).\n• Streamlined Remote Tab UI: Removed Screenshot and TV Photos from the Remote tab for a cleaner layout (still available under Devices & Settings).",
+  "assetSize": 10678660,
+  "releaseDate": "2026-11-19T08:49:13Z",
+  "downloadURL": "https://github.com/hongson117/4AppleTV/releases/download/v1.4.2/4AppleTV.ipa",
+  "releasePageURL": "https://github.com/hongson117/4AppleTV/releases/tag/v1.4.2",
+  "changelog": "4AppleTV v1.4.2 (Build 51):\n• Đồng bộ chính xác số ngày còn lại (7 ngày) với LiveContainerTV trên Apple TV: Khi gia hạn nhanh qua misagent (hoặc khi LiveContainerTV đang mở/ngủ), 4AppleTV tự động đẩy hồ sơ .mobileprovision đã gia hạn vào container qua HouseArrest và cổng :8228 (/api/v1/sync-expiry), chấm dứt lệch '7 ngày trên iPhone vs 4 ngày trên Apple TV'.\n• Tự động chữa lệch ngày cũ: Nếu trước đó Apple TV bị hiển thị ít ngày hơn hạn thực tế trên 4AppleTV, ứng dụng sẽ tự động đồng bộ lại ngay khi kết nối.\n• Giữ nguyên gia hạn nhanh misagent ~2 giây và tự hàn gắn ghép đôi lại Apple TV không mất dữ liệu.",
+  "changelogEn": "4AppleTV v1.4.2 (Build 51):\n• Synchronized 7-day LiveContainerTV expiry display: Fast misagent profile renewals now automatically mirror the Apple-signed .mobileprovision into LiveContainerTV via HouseArrest (even when TV app is closed) and push live updates over :8228 (/api/v1/sync-expiry), fixing the 7-day vs 4-day mismatch.\n• Retroactive Auto-Healing: Automatically reconciles already-refreshed LiveContainerTV hosts whenever 4AppleTV connects.\n• Keeps ~2-second fast misagent refresh and seamless TV re-pair app recovery.",
   "mandatory": false,
   "prerelease": false,
-  "sha256": "ced680b38a87bb5c00af2489f4fb5014ab73de8d45a17ca281229ccda817ffb6"
+  "sha256": "196b71e4859193d3cc3e24f356491fb2896ba94e732cab4cfdd16c4219199aa9"
 }
