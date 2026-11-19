@@ -1,16 +1,16 @@
 {
-  "version": "1.0.0",
-  "build": 1,
-  "gitCommit": "631c4cc",
-  "releaseTag": "lite-v1.0.0",
+  "version": "1.0.1",
+  "build": 2,
+  "gitCommit": "9ced27f",
+  "releaseTag": "lite-v1.0.1",
   "assetName": "4AppleTV-Lite.ipa",
-  "assetSize": 10310857,
-  "releaseDate": "2026-11-16T04:29:01Z",
+  "assetSize": 10336941,
+  "releaseDate": "2026-11-19T08:48:43Z",
   "downloadURL": "https://github.com/hongson117/4AppleTV/raw/lite/4AppleTV-Lite.ipa",
   "releasePageURL": "https://github.com/hongson117/4AppleTV/tree/lite",
-  "changelog": "4AppleTV Lite v1.0.0 (Build 1):\n• Phiên bản miễn phí phát hành rộng rãi — KHÔNG cần mã kích hoạt, không cần chứng chỉ ngoài (.p12), chỉ cần đăng nhập 1 tài khoản Apple ID chính.\n• Cài đặt 100% ứng dụng thông qua LiveContainerTV (không giới hạn số ứng dụng chỉ với duy nhất 1 slot Apple ID), giữ trọn bộ Remote điều khiển độ trễ thấp, Chụp màn hình TV không dây và Thư viện đầy đủ (Kodi, Stremio, Orivio TV, Nuvio TV, Yattee + dán link .ipa/.deb/GitHub).\n• Hỗ trợ gia hạn nhanh ~2 giây qua misagent không cần cài lại app, tự hàn gắn ghép đôi lại Apple TV và bảo vệ đa lớp BLA chống sao chép trái phép.",
-  "changelogEn": "4AppleTV Lite v1.0.0 (Build 1):\n• Free public edition — zero activation key required, no external .p12 certificates needed, uses 1 primary Apple ID.\n• 100% LiveContainerTV installation (unlimited apps inside 1 Apple ID slot) while keeping the full low-latency Apple TV Remote, wireless Apple TV Screenshot capture, and full App Library (Kodi, Stremio, Orivio TV, Nuvio TV, Yattee + direct .ipa/.deb/GitHub URLs).\n• Includes ~2s misagent fast identity refresh (no app reinstall), automatic re-pair orphan healing, and BLA Counter-REA binary protection.",
+  "changelog": "4AppleTV Lite v1.0.1 (Build 2):\n• Đồng bộ chính xác số ngày còn lại (7 ngày) với LiveContainerTV trên Apple TV: Khi gia hạn nhanh qua misagent, 4AppleTV Lite tự động đồng bộ hồ sơ .mobileprovision đã gia hạn qua HouseArrest (kể cả khi app TV đang đóng) và cổng :8228 (/api/v1/sync-expiry), sửa dứt điểm lỗi hiển thị 4 ngày trên TV.\n• Tự động đồng bộ bù cho các lần gia hạn trước đó ngay khi 4AppleTV Lite kết nối lại với LiveContainerTV.\n• Phiên bản miễn phí — 1 Apple ID, không mã kích hoạt, cài 100% qua LiveContainerTV & bảo vệ BLA.",
+  "changelogEn": "4AppleTV Lite v1.0.1 (Build 2):\n• Synchronized 7-day LiveContainerTV expiry display: Fast misagent profile renewals automatically mirror the renewed .mobileprovision into LiveContainerTV via HouseArrest and push live updates over :8228 (/api/v1/sync-expiry), fixing the 7-day vs 4-day mismatch.\n• Retroactive Auto-Healing: Automatically syncs previously refreshed LiveContainerTV hosts as soon as 4AppleTV Lite connects.\n• Free public edition — zero activation key, 1 primary Apple ID, 100% LiveContainerTV & BLA protected.",
   "mandatory": false,
   "prerelease": false,
-  "sha256": "608f3ae53e50032665878b3fb2b687f714527e990cdb2f97be656437994e295e"
+  "sha256": "d2e956a665415d4ce97ba7df9d52a95e887ed61f0021242be233307f9289104a"
 }

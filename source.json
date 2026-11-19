@@ -16,14 +16,14 @@
       "category": "utilities",
       "versions": [
         {
-          "version": "1.0.0",
-          "buildVersion": "1",
-          "date": "2026-11-16T04:29:01Z",
+          "version": "1.0.1",
+          "buildVersion": "2",
+          "date": "2026-11-19T08:48:43Z",
           "downloadURL": "https://github.com/hongson117/4AppleTV/raw/lite/4AppleTV-Lite.ipa",
-          "size": 10310857,
+          "size": 10336941,
           "minOSVersion": "17.0",
-          "localizedDescription": "4AppleTV Lite v1.0.0 (Build 1):\n• Free public edition — zero activation key required, no external .p12 certificates needed, uses 1 primary Apple ID.\n• 100% LiveContainerTV installation (unlimited apps inside 1 Apple ID slot) while keeping the full low-latency Apple TV Remote, wireless Apple TV Screenshot capture, and full App Library (Kodi, Stremio, Orivio TV, Nuvio TV, Yattee + direct .ipa/.deb/GitHub URLs).\n• Includes ~2s misagent fast identity refresh (no app reinstall), automatic re-pair orphan healing, and BLA Counter-REA binary protection.",
-          "sha256": "608f3ae53e50032665878b3fb2b687f714527e990cdb2f97be656437994e295e"
+          "localizedDescription": "4AppleTV Lite v1.0.1 (Build 2):\n• Synchronized 7-day LiveContainerTV expiry display: Fast misagent profile renewals automatically mirror the renewed .mobileprovision into LiveContainerTV via HouseArrest and push live updates over :8228 (/api/v1/sync-expiry), fixing the 7-day vs 4-day mismatch.\n• Retroactive Auto-Healing: Automatically syncs previously refreshed LiveContainerTV hosts as soon as 4AppleTV Lite connects.\n• Free public edition — zero activation key, 1 primary Apple ID, 100% LiveContainerTV & BLA protected.",
+          "sha256": "d2e956a665415d4ce97ba7df9d52a95e887ed61f0021242be233307f9289104a"
         }
       ],
       "appPermissions": {
