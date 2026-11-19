@@ -1,16 +1,16 @@
 {
-  "version": "1.4.2",
-  "build": 51,
-  "gitCommit": "6b42e15",
-  "releaseTag": "v1.4.2",
+  "version": "1.4.3",
+  "build": 52,
+  "gitCommit": "1248c0f",
+  "releaseTag": "v1.4.3",
   "assetName": "4AppleTV.ipa",
-  "assetSize": 10678660,
-  "releaseDate": "2026-11-19T08:49:13Z",
-  "downloadURL": "https://github.com/hongson117/4AppleTV/releases/download/v1.4.2/4AppleTV.ipa",
-  "releasePageURL": "https://github.com/hongson117/4AppleTV/releases/tag/v1.4.2",
-  "changelog": "4AppleTV v1.4.2 (Build 51):\n• Đồng bộ chính xác số ngày còn lại (7 ngày) với LiveContainerTV trên Apple TV: Khi gia hạn nhanh qua misagent (hoặc khi LiveContainerTV đang mở/ngủ), 4AppleTV tự động đẩy hồ sơ .mobileprovision đã gia hạn vào container qua HouseArrest và cổng :8228 (/api/v1/sync-expiry), chấm dứt lệch '7 ngày trên iPhone vs 4 ngày trên Apple TV'.\n• Tự động chữa lệch ngày cũ: Nếu trước đó Apple TV bị hiển thị ít ngày hơn hạn thực tế trên 4AppleTV, ứng dụng sẽ tự động đồng bộ lại ngay khi kết nối.\n• Giữ nguyên gia hạn nhanh misagent ~2 giây và tự hàn gắn ghép đôi lại Apple TV không mất dữ liệu.",
-  "changelogEn": "4AppleTV v1.4.2 (Build 51):\n• Synchronized 7-day LiveContainerTV expiry display: Fast misagent profile renewals now automatically mirror the Apple-signed .mobileprovision into LiveContainerTV via HouseArrest (even when TV app is closed) and push live updates over :8228 (/api/v1/sync-expiry), fixing the 7-day vs 4-day mismatch.\n• Retroactive Auto-Healing: Automatically reconciles already-refreshed LiveContainerTV hosts whenever 4AppleTV connects.\n• Keeps ~2-second fast misagent refresh and seamless TV re-pair app recovery.",
+  "assetSize": 10678023,
+  "releaseDate": "2026-11-19T10:53:11Z",
+  "downloadURL": "https://github.com/hongson117/4AppleTV/releases/download/v1.4.3/4AppleTV.ipa",
+  "releasePageURL": "https://github.com/hongson117/4AppleTV/releases/tag/v1.4.3",
+  "changelog": "4AppleTV v1.4.3 (Build 52):\n• Sửa dứt điểm lỗi cập nhật ứng dụng Apple TV & LiveContainerTV báo thành công nhưng không lên phiên bản mới: Khi cài/nâng cấp gói `.ipa` có version hoặc build khác bản đang cài, 4AppleTV bắt buộc cài đè đầy đủ (chỉ dùng gia hạn nhanh `misagent` ~2 giây khi gia hạn 7 ngày cùng phiên bản).\n• Giữ trọn đồng bộ 7 ngày với LiveContainerTV qua HouseArrest + cổng :8228 (/api/v1/sync-expiry) và tự động chữa lệch ngày cũ.",
+  "changelogEn": "4AppleTV v1.4.3 (Build 52):\n• Fixed Apple TV app & LiveContainerTV upgrades reporting success while staying on the older version: Installing or updating an `.ipa` whose version/build differs from Apple TV now enforces a full package reinstall while keeping ~2s fast `misagent` renewals for same-version 7-day refreshes.\n• Preserves dual-channel LiveContainerTV 7-day expiry sync via HouseArrest + :8228 (/api/v1/sync-expiry) and retroactive auto-healing.",
   "mandatory": false,
   "prerelease": false,
-  "sha256": "196b71e4859193d3cc3e24f356491fb2896ba94e732cab4cfdd16c4219199aa9"
+  "sha256": "5f5aaa00b03b74fa98a2d7d4978ad8193a1db467bc83f1426d9224d3311d5fe6"
 }

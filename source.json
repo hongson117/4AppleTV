@@ -16,14 +16,14 @@
       "category": "utilities",
       "versions": [
         {
-          "version": "1.4.2",
-          "buildVersion": "51",
-          "date": "2026-11-19T08:49:13Z",
-          "downloadURL": "https://github.com/hongson117/4AppleTV/releases/download/v1.4.2/4AppleTV.ipa",
-          "size": 10678660,
+          "version": "1.4.3",
+          "buildVersion": "52",
+          "date": "2026-11-19T10:53:11Z",
+          "downloadURL": "https://github.com/hongson117/4AppleTV/releases/download/v1.4.3/4AppleTV.ipa",
+          "size": 10678023,
           "minOSVersion": "17.0",
-          "localizedDescription": "4AppleTV v1.4.2 (Build 51):\n• Synchronized 7-day LiveContainerTV expiry display: Fast misagent profile renewals now automatically mirror the Apple-signed .mobileprovision into LiveContainerTV via HouseArrest (even when TV app is closed) and push live updates over :8228 (/api/v1/sync-expiry), fixing the 7-day vs 4-day mismatch.\n• Retroactive Auto-Healing: Automatically reconciles already-refreshed LiveContainerTV hosts whenever 4AppleTV connects.\n• Keeps ~2-second fast misagent refresh and seamless TV re-pair app recovery.",
-          "sha256": "196b71e4859193d3cc3e24f356491fb2896ba94e732cab4cfdd16c4219199aa9"
+          "localizedDescription": "4AppleTV v1.4.3 (Build 52):\n• Fixed Apple TV app & LiveContainerTV upgrades reporting success while staying on the older version: Installing or updating an `.ipa` whose version/build differs from Apple TV now enforces a full package reinstall while keeping ~2s fast `misagent` renewals for same-version 7-day refreshes.\n• Preserves dual-channel LiveContainerTV 7-day expiry sync via HouseArrest + :8228 (/api/v1/sync-expiry) and retroactive auto-healing.",
+          "sha256": "5f5aaa00b03b74fa98a2d7d4978ad8193a1db467bc83f1426d9224d3311d5fe6"
         }
       ],
       "appPermissions": {
