@@ -1,0 +1,317 @@
+name: Build 4AppleTV-S Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_ref:
+        description: Private source branch or commit in hongson117/TVSideload
+        required: false
+        default: '4AppleTV-S'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: public-4appletv-s-release-build
+  cancel-in-progress: false
+
+jobs:
+  core-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: hongson117/TVSideload
+          ref: ${{ inputs.source_ref || '4AppleTV-S' }}
+          ssh-key: ${{ secrets.TVSIDELOAD_SOURCE_READ_KEY }}
+          persist-credentials: false
+          show-progress: false
+          submodules: false
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: core
+      - name: Run private Rust core unit tests (sanitized output)
+        run: |
+          if cargo test --manifest-path core/Cargo.toml >/tmp/core-tests.log 2>&1; then
+            echo "Rust core tests passed."
+          else
+            grep -E '^error(\[[A-Z0-9]+\])?:|^test .* FAILED|^thread .* panicked' /tmp/core-tests.log | head -n 30 || true
+            echo "Rust core tests failed; private source snippets were not uploaded."
+            exit 1
+          fi
+
+  ios:
+    needs: [core-tests]
+    runs-on: macos-15
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: hongson117/TVSideload
+          ref: ${{ inputs.source_ref || '4AppleTV-S' }}
+          ssh-key: ${{ secrets.TVSIDELOAD_SOURCE_READ_KEY }}
+          persist-credentials: false
+          show-progress: false
+          submodules: false
+      - name: Record private source commit
+        run: echo "SOURCE_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: "aarch64-apple-ios,aarch64-apple-darwin,x86_64-apple-darwin"
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: |
+            core
+            macos
+          key: ios-macos-4appletv-s
+      - name: Run 4AppleTV-S Swift protocol & v1.3.0 contract tests (sanitized output)
+        run: |
+          (
+            swiftc -parse-as-library \
+              ios/TVSideload/Core/LanguageManager.swift \
+              ios/TVSideload/Remote/CompanionProtocol.swift \
+              ios/TVSideload/Remote/DeviceRegistryAndDiscovery.swift \
+              scripts/test_4appletv_protocol.swift \
+              -o /tmp/test_4appletv_protocol &&
+            /tmp/test_4appletv_protocol &&
+            swiftc -parse-as-library \
+              ios/TVSideload/Core/LanguageManager.swift \
+              ios/TVSideload/Core/Models.swift \
+              ios/TVSideload/Core/AutoRefreshCoordinator.swift \
+              ios/TVSideload/Core/PackageDownloadService.swift \
+              ios/TVSideload/Core/PreparedInstallCache.swift \
+              ios/TVSideload/Core/LiveContainerBridgeService.swift \
+              ios/TVSideload/Core/UpdateChecker.swift \
+              ios/TVSideload/Core/GitHubLibraryService.swift \
+              ios/TVSideload/Core/StorageCacheManager.swift \
+              ios/TVSideload/Core/ScreenshotStore.swift \
+              scripts/test_v1_2_contracts.swift \
+              -o /tmp/test_v1_2_contracts &&
+            /tmp/test_v1_2_contracts
+          ) >/tmp/swift-tests.log 2>&1 || {
+            grep -E 'error:|ASSERTION FAILED' /tmp/swift-tests.log | sed -E 's|^/.*/ios/|ios/|; s|^/.*/scripts/|scripts/|' | head -n 25 || true
+            echo "Swift contract tests failed; private source snippets were not uploaded."
+            exit 1
+          }
+          grep -E '^✅' /tmp/swift-tests.log || echo "Swift protocol & v1.3.0 contract tests passed."
+      - name: Build private Rust core (aarch64-apple-ios with BLA shield)
+        run: |
+          export IPHONEOS_DEPLOYMENT_TARGET=17.0
+          export RUSTFLAGS="--remap-path-prefix=${GITHUB_WORKSPACE}=/src --remap-path-prefix=${HOME}/.cargo=/deps/cargo"
+          cargo build --release --target aarch64-apple-ios --manifest-path core/Cargo.toml >/tmp/core-ios.log 2>&1 || {
+            grep -E '^error(\[[A-Z0-9]+\])?:' /tmp/core-ios.log | head -n 25 || true
+            echo "Rust iOS core build failed; private source snippets were not uploaded."
+            exit 1
+          }
+          test -f core/target/aarch64-apple-ios/release/libtvs_core.a
+          echo "Built libtvs_core.a successfully."
+      - name: Generate Xcode project & build unsigned iOS app
+        run: |
+          brew install xcodegen >/tmp/brew.log 2>&1 || true
+          xcodegen generate >/tmp/xcodegen.log 2>&1
+          xcodebuild -project TVSideload.xcodeproj -scheme TVSideload -configuration Release \
+            -sdk iphoneos -destination 'generic/platform=iOS' -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" build >/tmp/xcodebuild.log 2>&1 || {
+            grep -E 'error:' /tmp/xcodebuild.log | sed -E 's|^/.*/ios/|ios/|' | head -n 30 || true
+            echo "iOS build failed; private source snippets were not uploaded."
+            exit 1
+          }
+          echo "Unsigned Release iOS build succeeded."
+      - name: BLA Counter-REA Hardening, Re-Sign Gate, Cleartext Check & Manifest Packaging
+        run: |
+          set -euo pipefail
+          APP=build/Build/Products/Release-iphoneos/TVSideload.app
+          /usr/libexec/PlistBuddy -c "Set :TVSGitSHA ${SOURCE_SHA:0:7}" "$APP/Info.plist"
+          BUNDLE_VER=$(/usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" "$APP/Info.plist")
+          BUNDLE_BUILD=$(/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" "$APP/Info.plist")
+          echo "Built Info.plist version=$BUNDLE_VER build=$BUNDLE_BUILD sha=${SOURCE_SHA:0:7}"
+          test -f "$APP/BundledAppLibrary.json"
+          mkdir -p out/Payload
+          cp -R "$APP" out/Payload/
+
+          # 1. BLA packaging gate lint + Mach-O Counter-REA verification
+          npx -y bla-agents@3.3.0 lint .
+          npx -y bla-agents@3.3.0 verify out/Payload/TVSideload.app/TVSideload
+
+          # 2. Apple PropertyList & Downstream iOS Re-Signing Verification
+          plutil -lint out/Payload/TVSideload.app/Info.plist
+          plutil -lint out/Payload/TVSideload.app/EnclaveAttestation.plist
+          rm -rf /tmp/SignTest.app && cp -R out/Payload/TVSideload.app /tmp/SignTest.app
+          codesign --force --sign - --timestamp=none /tmp/SignTest.app
+          codesign --verify --deep --strict --verbose=2 /tmp/SignTest.app >/dev/null 2>&1
+          rm -rf /tmp/SignTest.app
+
+          # 3. Cleartext secret gate check
+          BIN=out/Payload/TVSideload.app/TVSideload
+          ! strings -a "$BIN" | grep -qE "0S0VFmFyr0NCaIoeO|BEGIN PRIVATE|MC4CAQAw|2a79f805197aed35"
+          echo "exported symbols: $(nm -gU "$BIN" | wc -l)"
+
+          # 4. Package unsigned IPA & unified SHA-256 manifests
+          (cd out && zip -qry ../4AppleTV-S.ipa Payload)
+          cp 4AppleTV-S.ipa 4AppleTV.ipa
+          cp 4AppleTV-S.ipa TVSideload.ipa
+          IPA_SIZE=$(stat -f%z 4AppleTV-S.ipa)
+          IPA_SHA256=$(shasum -a 256 4AppleTV-S.ipa | awk '{print $1}')
+          echo "$IPA_SHA256  4AppleTV-S.ipa" > SHA256SUMS.txt
+          python3 scripts/make_source.py --version-json "$BUNDLE_VER" "$IPA_SIZE" "$BUNDLE_BUILD" "$IPA_SHA256" "${SOURCE_SHA:0:7}" > version.json
+          python3 scripts/make_source.py "$BUNDLE_VER" "$IPA_SIZE" "$BUNDLE_BUILD" "$IPA_SHA256" "${SOURCE_SHA:0:7}" > source.json
+          ls -la 4AppleTV-S.ipa 4AppleTV.ipa TVSideload.ipa version.json source.json SHA256SUMS.txt
+      - name: Test macOS USB installer & launcher (sanitized output)
+        env:
+          MACOSX_DEPLOYMENT_TARGET: "11.0"
+        run: |
+          (
+            cargo test --manifest-path macos/Cargo.toml &&
+            bash -n macos/Cai-4AppleTV-S.command &&
+            python3 scripts/test_macos_launcher.py
+          ) >/tmp/macos-tests.log 2>&1 || {
+            grep -E '^error(\[[A-Z0-9]+\])?:|^test .* FAILED|^thread .* panicked|AssertionError|SyntaxError' /tmp/macos-tests.log | head -n 25 || true
+            echo "macOS USB installer tests failed; private source snippets were not uploaded."
+            exit 1
+          }
+          echo "macOS USB installer & launcher tests passed."
+      - name: Build & package Universal macOS USB installer
+        env:
+          MACOSX_DEPLOYMENT_TARGET: "11.0"
+        run: |
+          set -euo pipefail
+          export FOURAPPLETV_GIT_SHA=${SOURCE_SHA:0:7}
+          export RUSTFLAGS="--remap-path-prefix=${GITHUB_WORKSPACE}=/src --remap-path-prefix=${HOME}/.cargo=/deps/cargo"
+          cargo build --release --manifest-path macos/Cargo.toml --target aarch64-apple-darwin >/tmp/macos-arm64.log 2>&1 || {
+            grep -E '^error(\[[A-Z0-9]+\])?:' /tmp/macos-arm64.log | head -n 25 || true
+            exit 1
+          }
+          cargo build --release --manifest-path macos/Cargo.toml --target x86_64-apple-darwin >/tmp/macos-x64.log 2>&1 || {
+            grep -E '^error(\[[A-Z0-9]+\])?:' /tmp/macos-x64.log | head -n 25 || true
+            exit 1
+          }
+
+          mkdir -p out/4AppleTV-S-macOS
+          lipo -create macos/target/aarch64-apple-darwin/release/4appletv-mac macos/target/x86_64-apple-darwin/release/4appletv-mac -output out/4AppleTV-S-macOS/4appletv-mac
+          codesign --force --sign - --timestamp=none out/4AppleTV-S-macOS/4appletv-mac
+          codesign --verify --strict out/4AppleTV-S-macOS/4appletv-mac
+          lipo out/4AppleTV-S-macOS/4appletv-mac -verify_arch arm64 x86_64
+          out/4AppleTV-S-macOS/4appletv-mac --self-test
+          out/4AppleTV-S-macOS/4appletv-mac --help
+          out/4AppleTV-S-macOS/4appletv-mac --version
+          if arch -x86_64 /usr/bin/true 2>/dev/null; then
+            arch -x86_64 out/4AppleTV-S-macOS/4appletv-mac --self-test
+          else
+            echo 'Intel execution unavailable on this runner; both slices verified by lipo.'
+          fi
+
+          cp 4AppleTV-S.ipa out/4AppleTV-S-macOS/4AppleTV-S.ipa
+          cp macos/Cai-4AppleTV-S.command macos/README-VI.txt out/4AppleTV-S-macOS/
+          chmod 755 out/4AppleTV-S-macOS/Cai-4AppleTV-S.command out/4AppleTV-S-macOS/4appletv-mac
+          bash -n out/4AppleTV-S-macOS/Cai-4AppleTV-S.command
+          python3 scripts/generate_notices.py --manifest-path macos/Cargo.toml --platform aarch64-apple-darwin --output out/4AppleTV-S-macOS/ThirdPartyNotices.txt
+          (cd out/4AppleTV-S-macOS && shasum -a 256 4appletv-mac 4AppleTV-S.ipa Cai-4AppleTV-S.command README-VI.txt ThirdPartyNotices.txt > SHA256SUMS.txt && shasum -a 256 -c SHA256SUMS.txt)
+          ditto -c -k --keepParent out/4AppleTV-S-macOS 4appletv-s-macos-universal.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: 4AppleTV-S-ios-macos-${{ github.run_number }}
+          retention-days: 2
+          if-no-files-found: error
+          path: |
+            4AppleTV-S.ipa
+            4AppleTV.ipa
+            TVSideload.ipa
+            version.json
+            source.json
+            4appletv-s-macos-universal.zip
+            SHA256SUMS.txt
+
+  windows-installer:
+    needs: [ios]
+    runs-on: windows-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: hongson117/TVSideload
+          ref: ${{ inputs.source_ref || '4AppleTV-S' }}
+          ssh-key: ${{ secrets.TVSIDELOAD_SOURCE_READ_KEY }}
+          persist-credentials: false
+          show-progress: false
+          submodules: false
+      - name: Record private source commit
+        shell: pwsh
+        run: '"SOURCE_SHA=$(git rev-parse HEAD)" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: windows
+          key: windows-msvc-4appletv-s
+          cache-on-failure: true
+      - uses: actions/download-artifact@v4
+        with:
+          name: 4AppleTV-S-ios-macos-${{ github.run_number }}
+      - name: Test Windows USB installer (sanitized output)
+        shell: pwsh
+        run: |
+          $testLog = Join-Path $env:TEMP 'win-test.log'
+          cargo test --manifest-path windows/Cargo.toml *>&1 | Out-File -FilePath $testLog -Encoding utf8
+          if ($LASTEXITCODE -ne 0) {
+            Select-String -Path $testLog -Pattern '^error(\[[A-Z0-9]+\])?:|^test .* FAILED|^thread .* panicked' | Select-Object -First 25 | ForEach-Object { $_.Line }
+            Write-Host 'Windows USB installer tests failed; private source snippets were not uploaded.'
+            exit $LASTEXITCODE
+          }
+          Write-Host 'Windows USB installer tests passed.'
+      - name: Build Windows USB installer binary (sanitized output)
+        shell: pwsh
+        run: |
+          $env:FOURAPPLETV_GIT_SHA = $env:SOURCE_SHA.Substring(0, 7)
+          $env:RUSTFLAGS = "-C target-feature=+crt-static --remap-path-prefix=$env:GITHUB_WORKSPACE=/src --remap-path-prefix=$env:USERPROFILE/.cargo=/deps/cargo"
+          $buildLog = Join-Path $env:TEMP 'win-build.log'
+          cargo build --release --manifest-path windows/Cargo.toml *>&1 | Out-File -FilePath $buildLog -Encoding utf8
+          if ($LASTEXITCODE -ne 0) {
+            Select-String -Path $buildLog -Pattern '^error(\[[A-Z0-9]+\])?:' | Select-Object -First 25 | ForEach-Object { $_.Line }
+            Write-Host 'Windows USB installer build failed; private source snippets were not uploaded.'
+            exit $LASTEXITCODE
+          }
+          windows/target/release/4appletv-cli.exe --self-test
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          windows/target/release/4appletv-cli.exe --help
+          windows/target/release/4appletv-cli.exe --version
+      - name: Stage, verify & zip Windows installer package
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $package = New-Item -ItemType Directory -Path out/4AppleTV-S-Windows -Force
+          Copy-Item windows/target/release/4appletv-cli.exe, windows/Cai-4AppleTV-S.bat, windows/Kiem-tra-goi.ps1 -Destination $package
+          Copy-Item 4AppleTV-S.ipa -Destination (Join-Path $package '4AppleTV-S.ipa')
+          Copy-Item windows/README.md -Destination (Join-Path $package 'HUONG-DAN.md')
+          python scripts/generate_notices.py --manifest-path windows/Cargo.toml --platform x86_64-pc-windows-msvc --output (Join-Path $package 'ThirdPartyNotices.txt')
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $rows = Get-ChildItem -LiteralPath $package -File | Sort-Object Name | ForEach-Object { '{0}  {1}' -f (Get-FileHash -LiteralPath $_.FullName -Algorithm SHA256).Hash.ToLower(), $_.Name }
+          [IO.File]::WriteAllLines((Join-Path $package 'SHA256SUMS.txt'), $rows, [Text.UTF8Encoding]::new($false))
+          powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $package 'Kiem-tra-goi.ps1')
+          if ($LASTEXITCODE -ne 0) { throw 'Package verification failed' }
+          if (Test-Path 4appletv-s-windows.zip) { Remove-Item 4appletv-s-windows.zip -Force }
+          Compress-Archive -LiteralPath $package.FullName -DestinationPath 4appletv-s-windows.zip
+
+          $bundleFiles = @('4AppleTV-S.ipa', '4appletv-s-windows.zip', '4appletv-s-macos-universal.zip', 'version.json', 'source.json')
+          $topRows = $bundleFiles | ForEach-Object { '{0}  {1}' -f (Get-FileHash -LiteralPath $_ -Algorithm SHA256).Hash.ToLower(), $_ }
+          [IO.File]::WriteAllLines('SHA256SUMS.txt', $topRows, [Text.UTF8Encoding]::new($false))
+      - uses: actions/upload-artifact@v4
+        with:
+          name: 4AppleTV-S-release-bundle-${{ github.run_number }}
+          retention-days: 5
+          if-no-files-found: error
+          path: |
+            4AppleTV-S.ipa
+            4AppleTV.ipa
+            TVSideload.ipa
+            4appletv-s-windows.zip
+            4appletv-s-macos-universal.zip
+            version.json
+            source.json
+            SHA256SUMS.txt
