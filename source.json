@@ -16,14 +16,14 @@
       "category": "utilities",
       "versions": [
         {
-          "version": "1.0.1",
-          "buildVersion": "2",
-          "date": "2026-11-19T08:48:43Z",
+          "version": "1.0.2",
+          "buildVersion": "3",
+          "date": "2026-11-19T10:52:19Z",
           "downloadURL": "https://github.com/hongson117/4AppleTV/raw/lite/4AppleTV-Lite.ipa",
-          "size": 10336941,
+          "size": 10336069,
           "minOSVersion": "17.0",
-          "localizedDescription": "4AppleTV Lite v1.0.1 (Build 2):\n• Synchronized 7-day LiveContainerTV expiry display: Fast misagent profile renewals automatically mirror the renewed .mobileprovision into LiveContainerTV via HouseArrest and push live updates over :8228 (/api/v1/sync-expiry), fixing the 7-day vs 4-day mismatch.\n• Retroactive Auto-Healing: Automatically syncs previously refreshed LiveContainerTV hosts as soon as 4AppleTV Lite connects.\n• Free public edition — zero activation key, 1 primary Apple ID, 100% LiveContainerTV & BLA protected.",
-          "sha256": "d2e956a665415d4ce97ba7df9d52a95e887ed61f0021242be233307f9289104a"
+          "localizedDescription": "4AppleTV Lite v1.0.2 (Build 3):\n• Fixed LiveContainerTV & Apple TV app upgrades reporting success while remaining on the older version: Version/build updates now enforce a full package reinstall while preserving ~2s fast `misagent` 7-day renewals for matching versions.\n• Preserves dual-channel LiveContainerTV 7-day expiry sync via HouseArrest + :8228 (/api/v1/sync-expiry) — free public 1-Apple-ID edition.",
+          "sha256": "ae32f95113323cdca74484cf15bbd1a67fe787347b6afd45eb99c16cf329cfad"
         }
       ],
       "appPermissions": {
