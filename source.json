@@ -16,14 +16,14 @@
       "category": "utilities",
       "versions": [
         {
-          "version": "1.0.2",
-          "buildVersion": "3",
-          "date": "2026-11-19T10:52:19Z",
+          "version": "1.0.3",
+          "buildVersion": "4",
+          "date": "2026-11-24T00:22:32Z",
           "downloadURL": "https://github.com/hongson117/4AppleTV/raw/lite/4AppleTV-Lite.ipa",
-          "size": 10336069,
+          "size": 10361043,
           "minOSVersion": "17.0",
-          "localizedDescription": "4AppleTV Lite v1.0.2 (Build 3):\n• Fixed LiveContainerTV & Apple TV app upgrades reporting success while remaining on the older version: Version/build updates now enforce a full package reinstall while preserving ~2s fast `misagent` 7-day renewals for matching versions.\n• Preserves dual-channel LiveContainerTV 7-day expiry sync via HouseArrest + :8228 (/api/v1/sync-expiry) — free public 1-Apple-ID edition.",
-          "sha256": "ae32f95113323cdca74484cf15bbd1a67fe787347b6afd45eb99c16cf329cfad"
+          "localizedDescription": "4AppleTV Lite v1.0.3 (Build 4):\n• Eliminated Apple TV connection drops during LiveContainerTV refreshes: Drops `misagent` before Apple Developer Portal calls, auto-reconnects idle TLS-PSK RSD tunnels, and adds automatic transient retry on manual refresh.\n• Pre-wakes Apple TV Wi-Fi, matches mDNS rename suffixes (`Apple TV (2)`), tries multi-host IPv4 candidates, and stabilizes :8228 sync — free 1-Apple-ID edition.",
+          "sha256": "04d659b117dfbbf003d9fb6cb5d949f16c219f73cbdc46cc91986258e063762d"
         }
       ],
       "appPermissions": {
