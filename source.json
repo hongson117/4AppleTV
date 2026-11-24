@@ -16,14 +16,14 @@
       "category": "utilities",
       "versions": [
         {
-          "version": "1.4.3",
-          "buildVersion": "52",
-          "date": "2026-11-19T10:53:11Z",
-          "downloadURL": "https://github.com/hongson117/4AppleTV/releases/download/v1.4.3/4AppleTV.ipa",
-          "size": 10678023,
+          "version": "1.4.4",
+          "buildVersion": "53",
+          "date": "2026-11-24T00:22:17Z",
+          "downloadURL": "https://github.com/hongson117/4AppleTV/releases/download/v1.4.4/4AppleTV.ipa",
+          "size": 10700235,
           "minOSVersion": "17.0",
-          "localizedDescription": "4AppleTV v1.4.3 (Build 52):\n• Fixed Apple TV app & LiveContainerTV upgrades reporting success while staying on the older version: Installing or updating an `.ipa` whose version/build differs from Apple TV now enforces a full package reinstall while keeping ~2s fast `misagent` renewals for same-version 7-day refreshes.\n• Preserves dual-channel LiveContainerTV 7-day expiry sync via HouseArrest + :8228 (/api/v1/sync-expiry) and retroactive auto-healing.",
-          "sha256": "5f5aaa00b03b74fa98a2d7d4978ad8193a1db467bc83f1426d9224d3311d5fe6"
+          "localizedDescription": "4AppleTV v1.4.4 (Build 53):\n• Eliminated Apple TV connection drops during app & LiveContainerTV refreshes: Drops `misagent` before slow Apple Developer Portal calls, auto-heals idle TLS-PSK RSD tunnels with retry, and adds automatic transient retry for manual refreshes.\n• Pre-wakes Apple TV Wi-Fi, matches mDNS rename suffixes (`Apple TV (2)`), tries ordered multi-host IPv4 candidates, and staggers :8228 probes so refreshes succeed reliably on the first tap.",
+          "sha256": "319515148a6cb2fb4cb78dad02282027b2541014073f88ca53bc87cfdba96fa3"
         }
       ],
       "appPermissions": {

@@ -1,16 +1,16 @@
 {
-  "version": "1.4.3",
-  "build": 52,
-  "gitCommit": "1248c0f",
-  "releaseTag": "v1.4.3",
+  "version": "1.4.4",
+  "build": 53,
+  "gitCommit": "3858f6d",
+  "releaseTag": "v1.4.4",
   "assetName": "4AppleTV.ipa",
-  "assetSize": 10678023,
-  "releaseDate": "2026-11-19T10:53:11Z",
-  "downloadURL": "https://github.com/hongson117/4AppleTV/releases/download/v1.4.3/4AppleTV.ipa",
-  "releasePageURL": "https://github.com/hongson117/4AppleTV/releases/tag/v1.4.3",
-  "changelog": "4AppleTV v1.4.3 (Build 52):\n• Sửa dứt điểm lỗi cập nhật ứng dụng Apple TV & LiveContainerTV báo thành công nhưng không lên phiên bản mới: Khi cài/nâng cấp gói `.ipa` có version hoặc build khác bản đang cài, 4AppleTV bắt buộc cài đè đầy đủ (chỉ dùng gia hạn nhanh `misagent` ~2 giây khi gia hạn 7 ngày cùng phiên bản).\n• Giữ trọn đồng bộ 7 ngày với LiveContainerTV qua HouseArrest + cổng :8228 (/api/v1/sync-expiry) và tự động chữa lệch ngày cũ.",
-  "changelogEn": "4AppleTV v1.4.3 (Build 52):\n• Fixed Apple TV app & LiveContainerTV upgrades reporting success while staying on the older version: Installing or updating an `.ipa` whose version/build differs from Apple TV now enforces a full package reinstall while keeping ~2s fast `misagent` renewals for same-version 7-day refreshes.\n• Preserves dual-channel LiveContainerTV 7-day expiry sync via HouseArrest + :8228 (/api/v1/sync-expiry) and retroactive auto-healing.",
+  "assetSize": 10700235,
+  "releaseDate": "2026-11-24T00:22:17Z",
+  "downloadURL": "https://github.com/hongson117/4AppleTV/releases/download/v1.4.4/4AppleTV.ipa",
+  "releasePageURL": "https://github.com/hongson117/4AppleTV/releases/tag/v1.4.4",
+  "changelog": "4AppleTV v1.4.4 (Build 53):\n• Khắc phục dứt điểm lỗi rớt kết nối Apple TV khi làm mới & đồng bộ LiveContainerTV: Không còn giữ mở phiên `misagent` trong lúc chờ máy chủ Apple Developer, tự động kiểm tra và nối lại đường hầm TLS-PSK nếu Apple TV ngắt nhàn rỗi, kèm tự thử lại tức thì khi làm mới thủ công.\n• Đánh thức Wi-Fi Apple TV trước khi quét, khớp tên Bonjour có hậu tố đổi tên (`Apple TV (2)`), dự phòng đa địa chỉ IP (Remote + :8228 + lịch sử) và chống nghẽn cổng :8228 để làm mới ổn định ngay từ lần đầu.",
+  "changelogEn": "4AppleTV v1.4.4 (Build 53):\n• Eliminated Apple TV connection drops during app & LiveContainerTV refreshes: Drops `misagent` before slow Apple Developer Portal calls, auto-heals idle TLS-PSK RSD tunnels with retry, and adds automatic transient retry for manual refreshes.\n• Pre-wakes Apple TV Wi-Fi, matches mDNS rename suffixes (`Apple TV (2)`), tries ordered multi-host IPv4 candidates, and staggers :8228 probes so refreshes succeed reliably on the first tap.",
   "mandatory": false,
   "prerelease": false,
-  "sha256": "5f5aaa00b03b74fa98a2d7d4978ad8193a1db467bc83f1426d9224d3311d5fe6"
+  "sha256": "319515148a6cb2fb4cb78dad02282027b2541014073f88ca53bc87cfdba96fa3"
 }
