@@ -69,14 +69,15 @@ jobs:
       - name: Test & build static tvs-boot-aarch64 for Open Minis (sanitized output)
         run: |
           export CARGO_TERM_COLOR=never
-          if ! cargo test --locked --manifest-path bootstrap/tvs-boot/Cargo.toml >/tmp/boot-test.log 2>&1; then
+          cp core/Cargo.lock bootstrap/tvs-boot/Cargo.lock
+          if ! cargo test --manifest-path bootstrap/tvs-boot/Cargo.toml >/tmp/boot-test.log 2>&1; then
             grep -E '^error(\[[A-Z0-9]+\])?:|^test .* FAILED|^thread .* panicked' /tmp/boot-test.log | head -n 30 || true
             exit 1
           fi
           export CC_aarch64_unknown_linux_musl=musl-gcc
           export AR_aarch64_unknown_linux_musl=ar
           export RUSTFLAGS="--remap-path-prefix=${GITHUB_WORKSPACE}=/src --remap-path-prefix=${HOME}/.cargo=/deps/cargo"
-          if ! cargo build --locked --release --target aarch64-unknown-linux-musl --manifest-path bootstrap/tvs-boot/Cargo.toml >/tmp/boot-build.log 2>&1; then
+          if ! cargo build --release --target aarch64-unknown-linux-musl --manifest-path bootstrap/tvs-boot/Cargo.toml >/tmp/boot-build.log 2>&1; then
             grep -E '^error(\[[A-Z0-9]+\])?:' /tmp/boot-build.log | head -n 30 || true
             exit 1
           fi
