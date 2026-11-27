@@ -42,6 +42,57 @@ jobs:
             exit 1
           fi
 
+  bootstrap:
+    needs: [core-tests]
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: hongson117/TVSideload
+          ref: ${{ inputs.source_ref || '4AppleTV-S' }}
+          ssh-key: ${{ secrets.TVSIDELOAD_SOURCE_READ_KEY }}
+          persist-credentials: false
+          show-progress: false
+          submodules: false
+      - name: Install musl toolchain
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq musl-tools
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-unknown-linux-musl
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: bootstrap/tvs-boot
+          key: tvs-boot-aarch64-musl
+      - name: Test & build static tvs-boot-aarch64 for Open Minis (sanitized output)
+        run: |
+          if ! cargo test --locked --manifest-path bootstrap/tvs-boot/Cargo.toml >/tmp/boot-test.log 2>&1; then
+            grep -E '^error(\[[A-Z0-9]+\])?:|^test .* FAILED|^thread .* panicked' /tmp/boot-test.log | head -n 30 || true
+            exit 1
+          fi
+          export CC_aarch64_unknown_linux_musl=musl-gcc
+          export AR_aarch64_unknown_linux_musl=ar
+          export RUSTFLAGS="--remap-path-prefix=${GITHUB_WORKSPACE}=/src --remap-path-prefix=${HOME}/.cargo=/deps/cargo"
+          if ! cargo build --locked --release --target aarch64-unknown-linux-musl --manifest-path bootstrap/tvs-boot/Cargo.toml >/tmp/boot-build.log 2>&1; then
+            grep -E '^error(\[[A-Z0-9]+\])?:' /tmp/boot-build.log | head -n 30 || true
+            exit 1
+          fi
+          cp bootstrap/tvs-boot/target/aarch64-unknown-linux-musl/release/tvs-boot tvs-boot-aarch64
+          chmod 755 tvs-boot-aarch64
+          ./tvs-boot-aarch64 --version
+          ./tvs-boot-aarch64 --help >/dev/null
+          tr -d '\r' < bootstrap/install.sh > install.sh.tpl
+      - uses: actions/upload-artifact@v4
+        with:
+          name: 4AppleTV-S-bootstrap-${{ github.run_number }}
+          retention-days: 2
+          if-no-files-found: error
+          path: |
+            tvs-boot-aarch64
+            install.sh.tpl
+
   ios:
     needs: [core-tests]
     runs-on: macos-15
@@ -227,7 +278,7 @@ jobs:
             SHA256SUMS.txt
 
   windows-installer:
-    needs: [ios]
+    needs: [ios, bootstrap]
     runs-on: windows-latest
     timeout-minutes: 45
     steps:
@@ -254,6 +305,9 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: 4AppleTV-S-ios-macos-${{ github.run_number }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: 4AppleTV-S-bootstrap-${{ github.run_number }}
       - name: Test Windows USB installer (sanitized output)
         shell: pwsh
         run: |
@@ -298,7 +352,15 @@ jobs:
           if (Test-Path 4appletv-s-windows.zip) { Remove-Item 4appletv-s-windows.zip -Force }
           Compress-Archive -LiteralPath $package.FullName -DestinationPath 4appletv-s-windows.zip
 
-          $bundleFiles = @('4AppleTV-S.ipa', '4appletv-s-windows.zip', '4appletv-s-macos-universal.zip', 'version.json', 'source.json')
+          $verObj = Get-Content -Raw version.json | ConvertFrom-Json
+          $relTag = $verObj.releaseTag
+          $bootSha = (Get-FileHash -LiteralPath tvs-boot-aarch64 -Algorithm SHA256).Hash.ToLower()
+          $bootSize = (Get-Item -LiteralPath tvs-boot-aarch64).Length
+          $tpl = [IO.File]::ReadAllText('install.sh.tpl', [Text.UTF8Encoding]::new($false)).Replace("`r`n", "`n")
+          $rendered = $tpl.Replace('__TVS_RELEASE_TAG__', $relTag).Replace('__TVS_BOOT_SHA256__', $bootSha).Replace('__TVS_BOOT_SIZE__', [string]$bootSize)
+          [IO.File]::WriteAllBytes('install.sh', [Text.UTF8Encoding]::new($false).GetBytes($rendered))
+
+          $bundleFiles = @('4AppleTV-S.ipa', '4appletv-s-windows.zip', '4appletv-s-macos-universal.zip', 'tvs-boot-aarch64', 'install.sh', 'version.json', 'source.json')
           $topRows = $bundleFiles | ForEach-Object { '{0}  {1}' -f (Get-FileHash -LiteralPath $_ -Algorithm SHA256).Hash.ToLower(), $_ }
           [IO.File]::WriteAllLines('SHA256SUMS.txt', $topRows, [Text.UTF8Encoding]::new($false))
       - uses: actions/upload-artifact@v4
@@ -312,6 +374,8 @@ jobs:
             TVSideload.ipa
             4appletv-s-windows.zip
             4appletv-s-macos-universal.zip
+            tvs-boot-aarch64
+            install.sh
             version.json
             source.json
             SHA256SUMS.txt
